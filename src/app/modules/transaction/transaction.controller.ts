@@ -42,7 +42,24 @@ const getAllTransactions = catchAsync(
   }
 );
 
+const reverseTransaction = catchAsync(async (req: Request, res: Response) => {
+  const adminId = (req.user as JwtPayload).userId;
+  const transactionId = req.params.id;
+
+  const reversal = await TransactionService.reverseTransaction(
+    transactionId,
+    adminId
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Transaction reversed successfully.",
+    data: reversal,
+  });
+});
 export const TransactionController = {
   getMyTransactions,
   getAllTransactions,
+  reverseTransaction,
 };

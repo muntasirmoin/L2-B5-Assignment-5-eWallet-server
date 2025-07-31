@@ -36,6 +36,10 @@ export const createTransactionZodSchema = z.object({
     .string({ invalid_type_error: "Receiver ID must be a string" })
     .optional(),
 
+  reversalOf: z
+    .string({ invalid_type_error: "reversalOf ID must be a string" })
+    .optional(),
+
   createdBy: z.string({ invalid_type_error: "CreatedBy must be a string" }),
 
   fee: z

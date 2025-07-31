@@ -6,6 +6,7 @@ export enum TransactionTypeEnum {
   Send = "send-money",
   CashIn = "cash-in",
   CashOut = "cash-out",
+  Reversal = "reversal",
 }
 
 export enum TransactionStatusEnum {
@@ -30,6 +31,7 @@ export interface ITransaction {
   sender?: Types.ObjectId; // The user or agent whose wallet is being debited
   receiver?: Types.ObjectId; // The user or agent whose wallet is being credited
   source?: TransactionSourceEnum;
+  reversalOf?: Types.ObjectId;
 
   createdBy: Types.ObjectId;
 

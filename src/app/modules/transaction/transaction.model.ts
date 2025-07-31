@@ -36,6 +36,11 @@ const transactionSchema = new Schema<ITransaction>(
       enum: Object.values(TransactionSourceEnum),
       required: false,
     },
+    reversalOf: {
+      type: Schema.Types.ObjectId,
+      ref: "Transaction",
+      required: false,
+    },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "User",
