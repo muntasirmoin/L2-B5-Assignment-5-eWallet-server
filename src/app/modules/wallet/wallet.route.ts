@@ -13,6 +13,11 @@ import {
 const router = Router();
 
 router.get("/", checkAuth(Role.ADMIN), WalletControllers.getAllWallet);
+router.get(
+  "/my-wallet",
+  checkAuth(Role.AGENT, Role.USER),
+  WalletControllers.getMyWallet
+);
 
 router.post(
   "/add-money",

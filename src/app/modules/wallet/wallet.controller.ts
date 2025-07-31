@@ -92,6 +92,20 @@ const withdraw = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyWallet = catchAsync(async (req: Request, res: Response) => {
+  const decodeToken = req.user as JwtPayload;
+
+  const userId = decodeToken.userId;
+
+  const result = await WalletServices.getMyWallet(userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "My Wallet retrieved successfully",
+    data: result,
+  });
+});
 export const WalletControllers = {
   updateWalletIsBlockStatus,
   getAllWallet,
@@ -99,4 +113,5 @@ export const WalletControllers = {
   sendMoney,
 
   withdraw,
+  getMyWallet,
 };

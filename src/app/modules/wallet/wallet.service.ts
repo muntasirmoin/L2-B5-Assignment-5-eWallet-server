@@ -296,6 +296,19 @@ const withdraw = async (userId: string, source: string, amount: number) => {
   }
 };
 
+const getMyWallet = async (userId: string) => {
+  if (!userId) {
+    throw new AppError(401, "user  ID is missing.");
+  }
+
+  const myWallet = await Wallet.findOne({ user: userId }).populate(
+    "user",
+    "name"
+  );
+
+  return { myWallet };
+};
+
 export const WalletServices = {
   updateWalletIsBlockStatus,
   getAllWallet,
@@ -303,4 +316,5 @@ export const WalletServices = {
   sendMoney,
 
   withdraw,
+  getMyWallet,
 };
