@@ -6,6 +6,7 @@ import { User } from "./user.model";
 import { envVars } from "../../config/env";
 import { Wallet } from "../wallet/wallet.model";
 import { QueryBuilder } from "../../utils/QueryBuilder";
+import { JwtPayload } from "jsonwebtoken";
 
 const createUser = async (payload: Partial<IUser>) => {
   const { phone, pin, ...rest } = payload;
@@ -107,9 +108,142 @@ const getAllUsers = async (role: string, query: Record<string, string>) => {
   };
 };
 
+const updateUser = async (
+  userId: string,
+  payload: Partial<IUser>,
+  decodedToken: JwtPayload
+) => {
+  const ifUserExist = await User.findById(userId);
+
+  if (!ifUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User Not Found");
+  }
+
+  if (ifUserExist.isDeleted) {
+    throw new AppError(403, "User is not allowed to be updated Its Deleted");
+  }
+
+  if ("pin" in payload || "phone" in payload) {
+    throw new AppError(400, "Cannot update phone number or PIN here.");
+  }
+
+  if ("isAgentApproved" in payload) {
+    const isAdmin = decodedToken.role === Role.ADMIN;
+    const isTargetAgent = ifUserExist.role === Role.AGENT;
+
+    if (!isAdmin || !isTargetAgent) {
+      throw new AppError(
+        403,
+        `Only can update 'isAgentApproved'-- only for users with the 'agent' role. This Account role is:${ifUserExist.role}`
+      );
+    }
+  }
+
+  const isAdmin = decodedToken.role === Role.ADMIN;
+  const isTargetAdmin = ifUserExist.role === Role.ADMIN;
+
+  if (
+    isAdmin &&
+    isTargetAdmin &&
+    payload.role &&
+    payload.role !== ifUserExist.role
+  ) {
+    throw new AppError(403, "Admins cannot change the role of other admins.");
+  }
+
+  if (
+    isAdmin &&
+    userId === decodedToken.userId &&
+    payload.role &&
+    payload.role !== ifUserExist.role
+  ) {
+    throw new AppError(403, "Admins cannot change their own role.");
+  }
+
+  const allowedFields = [
+    "name",
+    "email",
+    "address",
+    "picture",
+    "role",
+    "isBlocked",
+    "commissionRate",
+    "permissionLevel",
+    "isAgentApproved",
+  ];
+
+  const sanitizedPayload = Object.fromEntries(
+    Object.entries(payload).filter(([key]) => allowedFields.includes(key))
+  );
+
+  if (Object.keys(sanitizedPayload).length === 0) {
+    throw new AppError(400, "No valid fields provided for update.");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(userId, sanitizedPayload, {
+    new: true,
+    runValidators: true,
+  }).select("-pin");
+
+  return updatedUser;
+};
+
+const updateProfile = async (userId: string, payload: Partial<IUser>) => {
+  const ifUserExist = await User.findById(userId);
+
+  if (!ifUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User Not Found");
+  }
+
+  if (ifUserExist.isBlocked || ifUserExist.isDeleted) {
+    throw new AppError(403, "User is not allowed to be updated");
+  }
+
+  if ("pin" in payload || "phone" in payload) {
+    throw new AppError(400, "Cannot update phone number or PIN here.");
+  }
+
+  if ("role" in payload) {
+    throw new AppError(403, "You cannot change your role from your profile.");
+  }
+  const forbiddenFields = [
+    "isBlocked",
+    "permissionLevel",
+    "commissionRate",
+    "isAgentApproved",
+  ];
+  for (const field of forbiddenFields) {
+    if (field in payload) {
+      throw new AppError(
+        403,
+        `You cannot update '${field}' from your profile.`
+      );
+    }
+  }
+
+  const allowedFields = ["name", "email", "address", "picture"];
+
+  const sanitizedPayload = Object.fromEntries(
+    Object.entries(payload).filter(([key]) => allowedFields.includes(key))
+  );
+
+  if (Object.keys(sanitizedPayload).length === 0) {
+    throw new AppError(400, "No valid fields provided for update.");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(userId, sanitizedPayload, {
+    new: true,
+    runValidators: true,
+  }).select("-pin");
+
+  return updatedUser;
+};
+
 export const UserServices = {
   createUser,
   getMe,
   changeAgentApprovalStatus,
   getAllUsers,
+  updateUser,
+  updateProfile,
 };

@@ -45,7 +45,7 @@ export const changeAgentApprovalStatus = catchAsync(
       userId,
       isAgentApproved
     );
-    console.log(isAgentApproved);
+
     sendResponse(res, {
       statusCode: 200,
       success: true,
@@ -91,9 +91,49 @@ export const getAllUsers = catchAsync(
   }
 );
 
+const updateUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.id;
+
+    const verifiedToken = req.user;
+
+    const payload = req.body;
+    const user = await UserServices.updateUser(
+      userId,
+      payload,
+      verifiedToken as JwtPayload
+    );
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "User Profile Updated Successfully",
+      data: user,
+    });
+  }
+);
+
+const updateProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const decodedToken = req.user as JwtPayload;
+    const userId = decodedToken.userId;
+    const payload = req.body;
+
+    const user = await UserServices.updateProfile(userId, payload);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Your Profile Updated Successfully",
+      data: user,
+    });
+  }
+);
+
 export const UserControllers = {
   createUser,
   getMe,
   changeAgentApprovalStatus,
   getAllUsers,
+  updateUser,
+  updateProfile,
 };

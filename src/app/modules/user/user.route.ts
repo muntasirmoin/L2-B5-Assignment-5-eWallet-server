@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UserControllers } from "./user.controller";
 import { validateRequest } from "../../middlewares/validateRequest";
-import { createUserZodSchema } from "./user.validation";
+import { createUserZodSchema, updateUserZodSchema } from "./user.validation";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "./user.interface";
 
@@ -21,7 +21,20 @@ router.patch(
   UserControllers.changeAgentApprovalStatus
 );
 
+router.patch(
+  "/profile-update",
+  checkAuth(...Object.values(Role)),
+  validateRequest(updateUserZodSchema),
+  UserControllers.updateProfile
+);
+
 router.get("/get-all-user", checkAuth(Role.ADMIN), UserControllers.getAllUsers);
+router.patch(
+  "/:id",
+  checkAuth(Role.ADMIN),
+  validateRequest(updateUserZodSchema),
+  UserControllers.updateUser
+);
 
 // router.get(
 //   "/role/:role",

@@ -34,7 +34,7 @@ const cashIn = async (senderId: string, receiverId: string, amount: number) => {
   const receiverExists = await User.findOne({ _id: receiverId });
 
   if (!receiverExists) {
-    throw new AppError(404, "Receiver account does not exist.");
+    throw new AppError(404, "User account does not exist.");
   }
 
   if (receiverExists.role !== Role.USER) {
@@ -54,10 +54,10 @@ const cashIn = async (senderId: string, receiverId: string, amount: number) => {
     );
 
     if (!senderWallet) {
-      throw new AppError(404, "Sender  wallet not found.");
+      throw new AppError(404, "Agent  wallet not found.");
     }
     if (!receiverWallet) {
-      throw new AppError(404, "Receiver wallet not found.");
+      throw new AppError(404, "User wallet not found.");
     }
 
     if (senderWallet.isBlocked === WalletStatus.BLOCKED) {
@@ -65,7 +65,7 @@ const cashIn = async (senderId: string, receiverId: string, amount: number) => {
     }
 
     if (receiverWallet.isBlocked === WalletStatus.BLOCKED) {
-      throw new AppError(403, "Receiver wallet is blocked.");
+      throw new AppError(403, "User wallet is blocked.");
     }
 
     if (senderWallet.balance < amount) {
