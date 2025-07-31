@@ -214,9 +214,29 @@ const singleTransaction = async (transactionId: string) => {
   return singleTransaction;
 };
 
+const getMyCommission = async (userId: string) => {
+  if (!userId) {
+    throw new AppError(401, "user  ID is missing.");
+  }
+
+  const myCommission = await Transaction.findOne({ receiver: userId }).populate(
+    "receiver",
+    "name"
+  );
+  if (myCommission?.type === "cash-out") {
+    return { myCommission };
+  } else {
+    throw new AppError(
+      400,
+      "you only get commission from cash-out type transaction"
+    );
+  }
+};
+
 export const TransactionService = {
   getMyTransactions,
   getAllTransactions,
   reverseTransaction,
   singleTransaction,
+  getMyCommission,
 };

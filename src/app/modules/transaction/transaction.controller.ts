@@ -72,9 +72,25 @@ const singleTransaction = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyCommission = catchAsync(async (req: Request, res: Response) => {
+  const decodeToken = req.user as JwtPayload;
+
+  const userId = decodeToken.userId;
+
+  const result = await TransactionService.getMyCommission(userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "My Wallet Commission history successfully",
+    data: result,
+  });
+});
+
 export const TransactionController = {
   getMyTransactions,
   getAllTransactions,
   reverseTransaction,
   singleTransaction,
+  getMyCommission,
 };

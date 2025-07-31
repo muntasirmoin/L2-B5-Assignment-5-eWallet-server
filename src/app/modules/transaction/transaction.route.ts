@@ -12,6 +12,12 @@ router.get(
 );
 
 router.get(
+  "/my-commission",
+  checkAuth(Role.AGENT),
+  TransactionController.getMyCommission
+);
+
+router.get(
   "/",
   checkAuth(Role.ADMIN),
   TransactionController.getAllTransactions
