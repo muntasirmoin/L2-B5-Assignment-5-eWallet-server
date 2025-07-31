@@ -80,9 +80,15 @@ const reverseTransaction = async (originalTxId: string, adminId: string) => {
     const originalTx = await Transaction.findById(originalTxId).session(
       session
     );
-    if (!originalTx) throw new AppError(404, "Original transaction not found.");
-    if (originalTx.status === TransactionStatusEnum.Reversed)
+    if (!originalTx) {
+      throw new AppError(404, "Original transaction not found.");
+    }
+    if (originalTx.status === TransactionStatusEnum.Pending) {
+      throw new AppError(400, "Cannot reverse a pending transaction.");
+    }
+    if (originalTx.status === TransactionStatusEnum.Reversed) {
       throw new AppError(400, "Transaction already reversed.");
+    }
 
     const amount = originalTx.amount;
 
