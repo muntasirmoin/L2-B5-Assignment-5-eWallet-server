@@ -10,6 +10,7 @@ import {
 } from "../transaction/transaction.interface";
 import { User } from "../user/user.model";
 import { Role } from "../user/user.interface";
+import { QueryBuilder } from "../../utils/QueryBuilder";
 
 const updateWalletIsBlockStatus = async (
   walletId: string,
@@ -30,10 +31,20 @@ const updateWalletIsBlockStatus = async (
   return updatedWallet;
 };
 
-const getAllWallet = async () => {
-  const wallets = await Wallet.find();
+const getAllWallet = async (query: Record<string, string>) => {
+  const queryBuilder = new QueryBuilder(Wallet.find(), query);
 
-  return wallets;
+  const allWalletData = queryBuilder.filter().sort().fields().paginate();
+
+  const [data, meta] = await Promise.all([
+    allWalletData.build(),
+    queryBuilder.getMeta(),
+  ]);
+
+  return {
+    data,
+    meta,
+  };
 };
 
 const addMoney = async (userId: string, amount: number, source: string) => {

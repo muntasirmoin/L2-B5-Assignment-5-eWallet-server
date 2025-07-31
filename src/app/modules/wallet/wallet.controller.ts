@@ -29,16 +29,18 @@ const updateWalletIsBlockStatus = catchAsync(
 
 const getAllWallet = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const role = req.params.role?.toLowerCase();
+    const query = req.query;
 
-    const users = await WalletServices.getAllWallet();
-    console.log(users);
+    const result = await WalletServices.getAllWallet(
+      query as Record<string, string>
+    );
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: `All Wallet retrieved successfully`,
-      data: users,
+      data: result.data,
+      meta: result.meta,
     });
   }
 );

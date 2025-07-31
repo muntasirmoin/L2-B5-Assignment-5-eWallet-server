@@ -57,9 +57,9 @@ export const changeAgentApprovalStatus = catchAsync(
   }
 );
 
-export const getUsersByRole = catchAsync(
+export const getAllUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const role = req.params.role?.toLowerCase();
+    const role = Role.USER;
 
     const validRoles = Object.values(Role).filter(
       (role) => role !== Role.ADMIN
@@ -74,14 +74,19 @@ export const getUsersByRole = catchAsync(
       });
     }
 
-    const users = await UserServices.getUsersByRole(role);
-    console.log(users);
+    const query = req.query;
+
+    const result = await UserServices.getAllUsers(
+      role,
+      query as Record<string, string>
+    );
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: `All ${role}s retrieved successfully`,
-      data: users,
+      data: result.data,
+      meta: result.meta,
     });
   }
 );
@@ -90,5 +95,5 @@ export const UserControllers = {
   createUser,
   getMe,
   changeAgentApprovalStatus,
-  getUsersByRole,
+  getAllUsers,
 };

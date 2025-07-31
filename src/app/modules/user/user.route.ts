@@ -21,10 +21,12 @@ router.patch(
   UserControllers.changeAgentApprovalStatus
 );
 
-router.get(
-  "/role/:role",
-  checkAuth(Role.ADMIN),
-  UserControllers.getUsersByRole
-);
+router.get("/get-all-user", checkAuth(Role.ADMIN), UserControllers.getAllUsers);
+
+// router.get(
+//   "/role/:role",
+//   checkAuth(Role.ADMIN),
+//   UserControllers.getUsersByRole
+// );
 
 export const UserRoutes = router;

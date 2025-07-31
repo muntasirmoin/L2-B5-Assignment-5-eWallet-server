@@ -5,6 +5,7 @@ import { IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import { envVars } from "../../config/env";
 import { Wallet } from "../wallet/wallet.model";
+import { QueryBuilder } from "../../utils/QueryBuilder";
 
 const createUser = async (payload: Partial<IUser>) => {
   const { phone, pin, ...rest } = payload;
@@ -89,15 +90,26 @@ export const changeAgentApprovalStatus = async (
   return updatedAgent;
 };
 
-const getUsersByRole = async (role: string) => {
-  const users = await User.find({ role }).select("-pin");
-  console.log(users);
-  return users;
+const getAllUsers = async (role: string, query: Record<string, string>) => {
+  const queryBuilder = new QueryBuilder(
+    User.find({ role }).select("-pin"),
+    query
+  );
+
+  const allUserData = queryBuilder.filter().sort().fields().paginate();
+  const [data, meta] = await Promise.all([
+    allUserData.build(),
+    queryBuilder.getMeta(),
+  ]);
+  return {
+    data,
+    meta,
+  };
 };
 
 export const UserServices = {
   createUser,
   getMe,
   changeAgentApprovalStatus,
-  getUsersByRole,
+  getAllUsers,
 };

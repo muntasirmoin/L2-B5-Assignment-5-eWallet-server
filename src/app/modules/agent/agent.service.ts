@@ -1,4 +1,5 @@
 import AppError from "../../helpers/AppError";
+import { QueryBuilder } from "../../utils/QueryBuilder";
 import {
   TransactionStatusEnum,
   TransactionTypeEnum,
@@ -214,7 +215,25 @@ const cashOut = async (
   }
 };
 
+const getAllAgents = async (role: string, query: Record<string, string>) => {
+  const queryBuilder = new QueryBuilder(
+    User.find({ role }).select("-pin"),
+    query
+  );
+
+  const allAgentData = queryBuilder.filter().sort().fields().paginate();
+  const [data, meta] = await Promise.all([
+    allAgentData.build(),
+    queryBuilder.getMeta(),
+  ]);
+  return {
+    data,
+    meta,
+  };
+};
+
 export const AgentServices = {
   cashIn,
   cashOut,
+  getAllAgents,
 };

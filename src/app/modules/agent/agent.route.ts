@@ -10,6 +10,12 @@ import {
 
 const router = Router();
 
+router.get(
+  "/get-all-agent",
+  checkAuth(Role.ADMIN),
+  AgentControllers.getAllAgents
+);
+
 router.post(
   "/cash-in",
   checkAuth(Role.AGENT),

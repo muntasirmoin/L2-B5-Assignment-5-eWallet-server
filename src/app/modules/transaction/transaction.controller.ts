@@ -1,0 +1,48 @@
+import { NextFunction, Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
+import httpStatus from "http-status-codes";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
+import { TransactionService } from "./transaction.service";
+
+const getMyTransactions = catchAsync(async (req: Request, res: Response) => {
+  const query = req.query;
+  const { userId, role } = req.user as JwtPayload;
+
+  const result = await TransactionService.getMyTransactions(
+    userId,
+    role,
+    query as Record<string, string>
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Transaction history retrieved successfully.",
+    data: result.data,
+    meta: result.meta,
+  });
+});
+
+const getAllTransactions = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query;
+
+    const result = await TransactionService.getAllTransactions(
+      query as Record<string, string>
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: `All Transaction retrieved successfully`,
+      data: result.data,
+      meta: result.meta,
+    });
+  }
+);
+
+export const TransactionController = {
+  getMyTransactions,
+  getAllTransactions,
+};
