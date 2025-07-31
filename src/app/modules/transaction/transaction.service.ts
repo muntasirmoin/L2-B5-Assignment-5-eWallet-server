@@ -134,8 +134,22 @@ const reverseTransaction = async (originalTxId: string, adminId: string) => {
         );
       }
 
+      //commission add to the user wallet
+
+      if (
+        originalTx.type === TransactionTypeEnum.CashOut &&
+        originalTx.commission
+      ) {
+        senderWallet.balance += originalTx.commission;
+        senderWallet.balance = Number(senderWallet.balance.toFixed(2));
+      }
+
+      //Number(().toFixed(2));
+
       receiverWallet.balance -= amount;
+      receiverWallet.balance = Number(receiverWallet.balance.toFixed(2));
       senderWallet.balance += amount;
+      senderWallet.balance = Number(senderWallet.balance.toFixed(2));
 
       await receiverWallet.save({ session });
       await senderWallet.save({ session });
@@ -150,6 +164,7 @@ const reverseTransaction = async (originalTxId: string, adminId: string) => {
           "User has insufficient balance to reverse add-money."
         );
       receiverWallet.balance -= amount;
+      receiverWallet.balance = Number(receiverWallet.balance.toFixed(2));
       await receiverWallet.save({ session });
     }
 
@@ -157,6 +172,7 @@ const reverseTransaction = async (originalTxId: string, adminId: string) => {
       if (!senderWallet)
         throw new AppError(400, "Wallet not found for reversal.");
       senderWallet.balance += amount;
+      senderWallet.balance = Number(senderWallet.balance.toFixed(2));
       await senderWallet.save({ session });
     }
 
@@ -172,6 +188,7 @@ const reverseTransaction = async (originalTxId: string, adminId: string) => {
           createdBy: adminId,
           reversalOf: originalTx._id,
           ...(originalTx.source && { source: originalTx.source }),
+          ...(originalTx.commission && { commission: originalTx.commission }),
         },
       ],
       { session }

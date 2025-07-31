@@ -151,7 +151,7 @@ const cashOut = async (
 
   try {
     // agent wallet
-    const senderWallet = await Wallet.findOne({ user: senderId }).session(
+    const agentWallet = await Wallet.findOne({ user: senderId }).session(
       session
     );
 
@@ -159,14 +159,14 @@ const cashOut = async (
       session
     );
 
-    if (!senderWallet) {
+    if (!agentWallet) {
       throw new AppError(404, "Agent  wallet not found.");
     }
     if (!userWallet) {
       throw new AppError(404, "Agent wallet not found.");
     }
 
-    if (senderWallet.isBlocked === WalletStatus.BLOCKED) {
+    if (agentWallet.isBlocked === WalletStatus.BLOCKED) {
       throw new AppError(403, "Your wallet is blocked.");
     }
 
@@ -174,21 +174,32 @@ const cashOut = async (
       throw new AppError(403, "User wallet is blocked.");
     }
 
-    if (userWallet.balance < amount) {
+    // if (userWallet.balance < amount) {
+    //   throw new AppError(
+    //     400,
+    //     `Insufficient User balance for Cash-Out: !!${amount} ${userWallet.currency}!!`
+    //   );
+    // }
+
+    const commissionRate = 0.02;
+    const commission = Number((amount * commissionRate).toFixed(2));
+    const totalDeductedFromUser = Number((amount + commission).toFixed(2));
+    if (userWallet.balance < totalDeductedFromUser) {
       throw new AppError(
         400,
-        `Insufficient User balance for Cash-Out: !!${amount} ${userWallet.currency}!!`
+        `Insufficient user balance for Cash-Out: ${amount} + Commission: ${commission}: Required ${totalDeductedFromUser}  ${userWallet.currency}`
       );
     }
+
     // receiver = user
     // sender = agent
     // Update balances
-    senderWallet.balance += amount;
-    senderWallet.balance = Number(senderWallet.balance.toFixed(2));
-    userWallet.balance -= amount;
+    agentWallet.balance += amount;
+    agentWallet.balance = Number(agentWallet.balance.toFixed(2));
+    userWallet.balance -= totalDeductedFromUser;
     userWallet.balance = Number(userWallet.balance.toFixed(2));
 
-    await senderWallet.save({ session }); //agent wallet
+    await agentWallet.save({ session });
     await userWallet.save({ session });
 
     const [transaction] = await Transaction.create(
@@ -197,6 +208,7 @@ const cashOut = async (
           type: TransactionTypeEnum.CashOut,
           amount,
           status: TransactionStatusEnum.Completed,
+          commission,
           sender: receiverId, //user
           receiver: senderId, //agent
           createdBy: senderId, //agent
@@ -207,7 +219,7 @@ const cashOut = async (
 
     await session.commitTransaction();
     session.endSession();
-    return { myAgentWallet: senderWallet, transaction };
+    return { myAgentWallet: agentWallet, transaction };
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
