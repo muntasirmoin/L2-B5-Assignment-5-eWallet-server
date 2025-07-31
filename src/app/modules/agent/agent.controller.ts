@@ -1,0 +1,44 @@
+import { NextFunction, Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
+import httpStatus from "http-status-codes";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
+import { AgentServices } from "./agent.service";
+
+const cashIn = catchAsync(async (req: Request, res: Response) => {
+  const decodeToken = req.user as JwtPayload;
+
+  const senderId = decodeToken.userId;
+  const { receiver, amount } = req.body;
+
+  const result = await AgentServices.cashIn(senderId, receiver, amount);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Cash In successfully",
+    data: result,
+  });
+});
+
+const cashOut = catchAsync(async (req: Request, res: Response) => {
+  const decodeToken = req.user as JwtPayload;
+
+  const senderId = decodeToken.userId;
+  const { receiver, amount } = req.body;
+  // receiver = user
+  // sender = agent
+  const result = await AgentServices.cashOut(senderId, receiver, amount);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Cash Out successfully",
+    data: result,
+  });
+});
+
+export const AgentControllers = {
+  cashIn,
+  cashOut,
+};

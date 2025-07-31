@@ -1,0 +1,94 @@
+import { NextFunction, Request, Response } from "express";
+import httpStatus from "http-status-codes";
+import { JwtPayload } from "jsonwebtoken";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
+import { UserServices } from "./user.service";
+import { Role } from "./user.interface";
+
+const createUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = await UserServices.createUser(req.body);
+
+    const { pin: pass, ...rest } = user.toObject();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Your account has been created successfully",
+      data: rest,
+    });
+  }
+);
+
+const getMe = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const decodedToken = req.user as JwtPayload;
+    console.log("req.user", req.user);
+    const result = await UserServices.getMe(decodedToken.userId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Your profile Retrieved Successfully",
+      data: result.data,
+    });
+  }
+);
+
+export const changeAgentApprovalStatus = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.params.id;
+    const { isAgentApproved } = req.body;
+
+    const updatedAgent = await UserServices.changeAgentApprovalStatus(
+      userId,
+      isAgentApproved
+    );
+    console.log(isAgentApproved);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: `Agent has been ${
+        isAgentApproved ? "approved" : "suspended"
+      } successfully.`,
+      data: updatedAgent,
+    });
+  }
+);
+
+export const getUsersByRole = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const role = req.params.role?.toLowerCase();
+
+    const validRoles = Object.values(Role).filter(
+      (role) => role !== Role.ADMIN
+    );
+    if (!validRoles.includes(role as Role.USER | Role.AGENT)) {
+      return sendResponse(res, {
+        statusCode: httpStatus.BAD_REQUEST,
+        success: false,
+        message:
+          "Invalid role. Please specify either 'agent' or 'user' to retrieve all.",
+        data: null,
+      });
+    }
+
+    const users = await UserServices.getUsersByRole(role);
+    console.log(users);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: `All ${role}s retrieved successfully`,
+      data: users,
+    });
+  }
+);
+
+export const UserControllers = {
+  createUser,
+  getMe,
+  changeAgentApprovalStatus,
+  getUsersByRole,
+};
