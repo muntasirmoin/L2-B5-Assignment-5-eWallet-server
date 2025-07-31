@@ -58,8 +58,23 @@ const reverseTransaction = catchAsync(async (req: Request, res: Response) => {
     data: reversal,
   });
 });
+
+const singleTransaction = catchAsync(async (req: Request, res: Response) => {
+  const transactionId = req.params.id;
+
+  const reversal = await TransactionService.singleTransaction(transactionId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Single Transaction Retrieved successfully.",
+    data: reversal,
+  });
+});
+
 export const TransactionController = {
   getMyTransactions,
   getAllTransactions,
   reverseTransaction,
+  singleTransaction,
 };

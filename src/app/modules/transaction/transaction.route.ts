@@ -23,4 +23,10 @@ router.post(
   TransactionController.reverseTransaction
 );
 
+router.get(
+  "/:id",
+  checkAuth(Role.ADMIN),
+  TransactionController.singleTransaction
+);
+
 export const TransactionRoutes = router;

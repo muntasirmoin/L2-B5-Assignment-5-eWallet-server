@@ -191,8 +191,15 @@ const reverseTransaction = async (originalTxId: string, adminId: string) => {
   }
 };
 
+const singleTransaction = async (transactionId: string) => {
+  const singleTransaction = await Transaction.findById(transactionId);
+
+  return singleTransaction;
+};
+
 export const TransactionService = {
   getMyTransactions,
   getAllTransactions,
   reverseTransaction,
+  singleTransaction,
 };
