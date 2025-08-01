@@ -87,3 +87,30 @@ Below are the categorized API routes for this project:
 | Cash-In (Agent)     | `cash-in`                 | Agent             | User            | cash                | Agent      | Agent takes physical cash and adds money to the user's wallet.        |
 | Cash-Out (Agent)    | `cash-out`                | User              | Agent           | cash                | Agent      | Agent gives physical cash, deducts from user's wallet balance.        |
 | Reverse Txn (Admin) | `reversed`                | Original Receiver | Original Sender | None                | Admin      | Admin reverses a transaction (e.g., fraud or error case).             |
+
+## 🔑 Key Features
+
+- **🛡️ User Authentication & Authorization**  
+  Secure login, logout, token refresh, and PIN change for all user!
+
+- **👥 User Management**  
+  Register new users, retrieve and update profiles manage user roles with strict role-based access By Admin.
+
+- **🤝 Agent Operations**  
+  Admins manage agents; agents can perform cash-in and cash-out transactions on behalf of users.
+
+- **💰 Wallet Management**  
+  Users can add money, send money, and withdraw funds. Admins can block/unblock wallets and view all wallets of role user/agent.
+
+- **🔄 Transaction Handling**  
+  Users and agents can view their transactions. Admins can access all transactions, reverse transactions. Agents can view commissions earned only for Cash-out.**Reverse Transactions**: Admins can reverse a specific transaction by its ID.User can mark his transaction as complete by its ID. This action is only allowed for the following transaction types:
+
+  - **Add-money**
+  - **Withdraw-money**
+  - **Send-money**
+
+- **🔒 Role-Based Access Control**  
+  Each endpoint enforces role restrictions, ensuring secure and controlled access to resources.
+
+- **📈 Versioned API Endpoints**  
+  All APIs are under `/api/v1` prefix, allowing for smooth upgrades compatibility.
