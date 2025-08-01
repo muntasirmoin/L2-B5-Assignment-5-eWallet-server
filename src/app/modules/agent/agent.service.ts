@@ -143,10 +143,17 @@ const cashOut = async (
     throw new AppError(400, "Amount must be a positive number.");
   }
 
-  const senderExists = await User.exists({ _id: senderId });
+  const senderExists = await User.findById(senderId);
 
   if (!senderExists) {
     throw new AppError(404, "Agent account does not exist.");
+  }
+
+  if (!senderExists.isAgentApproved) {
+    throw new AppError(
+      403,
+      `Your Name:${senderExists.name} Agent A/C: ${senderExists._id} is not approved. Please Contact With Admin`
+    );
   }
 
   const userExists = await User.findOne({ _id: receiverId });

@@ -7,7 +7,7 @@ const userSchema = new Schema<IUser>(
     phone: { type: String, required: true, unique: true },
     email: { type: String, lowercase: true },
 
-    pin: { type: String, required: true },
+    pin: { type: String, required: true, select: false },
     role: {
       type: String,
       enum: Object.values(Role),

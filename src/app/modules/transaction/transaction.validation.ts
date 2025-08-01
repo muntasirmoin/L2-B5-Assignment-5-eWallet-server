@@ -93,7 +93,7 @@ export const cashInZodSchema = z.object({
 
 export const cashOutZodSchema = z.object({
   // receiver: z.string({ invalid_type_error: "Receiver ID must be a string." }),
-  receiver: z
+  userId: z
     .string({ invalid_type_error: "Receiver ID must be a string." })
     .refine((val) => isValidObjectId(val), {
       message: "Receiver must be a valid ObjectId.",
