@@ -24,6 +24,15 @@ The system is designed to be user-friendly, secure, and scalable, offering a sea
 
 ## ✅ API Overview
 
+## 🚀 Auth API Routes
+
+| **Sl. No.** | **Method** | **Endpoint**        | **Access**                      | **Description**                                                |
+| ----------- | ---------- | ------------------- | ------------------------------- | -------------------------------------------------------------- |
+| 1           | POST       | /auth/login         | Public                          | Authenticates a user and returns JWT tokens.                   |
+| 2           | POST       | /auth/logout        | Private                         | Logs out the user and invalidates the session/token.           |
+| 3           | POST       | /auth/change-pin    | Authenticated Users (All Roles) | Allows users, agents, and admins to change their PIN securely. |
+| 4           | POST       | /auth/refresh-token | Public (with refresh token)     | Issues a new access token using a valid refresh token.         |
+
 ## 🚀 USER API Routes
 
 | **Sl. No.** | **Method** | **Endpoint**             | **Access**                     | **Description**                                                                                                               |
@@ -34,6 +43,36 @@ The system is designed to be user-friendly, secure, and scalable, offering a sea
 | 4           | GET        | /user/get-all-user       | Admin Only                     | Retrieve all user role accounts                                                                                               |
 | 5           | PATCH      | /user/profile-update     | All Roles (user, agent, admin) | Update the currently authenticated user's profile (self-update only). Only allows updating name, email, address, and picture. |
 | 6           | PATCH      | /user/:id                | Admin Only                     | Update a user/agent by ID                                                                                                     |
+
+## 🚀 Agent API Routes
+
+| **Sl. No.** | **Method** | **Endpoint**         | **Access** | **Description**                                       |
+| ----------- | ---------- | -------------------- | ---------- | ----------------------------------------------------- |
+| 1           | GET        | /agent/get-all-agent | Admin Only | Retrieve all agent role accounts                      |
+| 2           | POST       | /agent/cash-in       | Agent Only | Agent can add money to a user's wallet (Cash-In)      |
+| 3           | POST       | /agent/cash-out      | Agent Only | Agent withdraws (cash-out) money from a user's wallet |
+
+## 🚀 Wallet API Routes
+
+| **Sl. No.** | **Method** | **Endpoint**       | **Access**  | **Description**                                     |
+| ----------- | ---------- | ------------------ | ----------- | --------------------------------------------------- |
+| 1           | GET        | /wallet            | Admin Only  | Retrieve all user and agent wallets                 |
+| 2           | GET        | /wallet/my-wallet  | User, Agent | Retrieve user or agent wallets (based on the token) |
+| 3           | POST       | /wallet/add-money  | User Only   | Allows a user to add money to their own wallet      |
+| 4           | POST       | /wallet/send-money | User Only   | Allows a user to send money to another user         |
+| 5           | POST       | /wallet/withdraw   | User Only   | Allows a user to withdraw money from their wallet   |
+| 6           | PATCH      | /wallet/block/:id  | Admin Only  | Block or unblock a wallet by wallet ID              |
+
+## 🚀 Transaction API Routes
+
+| **Sl. No.** | **Method** | **Endpoint**                 | **Access**  | **Description**                                                                                                         |
+| ----------- | ---------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 1           | GET        | /transaction/my-transactions | User, Agent | Retrieve a paginated list of the user's or agent's transactions (based on the token)                                    |
+| 2           | GET        | /transaction                 | Admin Only  | Retrieve all transactions in the system!                                                                                |
+| 3           | POST       | /transaction/:id             | Admin Only  | Reverse a specific transaction by its ID. Only admins can perform this action                                           |
+| 4           | GET        | /transaction/:id             | Admin Only  | Retrieve a single transaction by ID                                                                                     |
+| 5           | GET        | /transaction/my-commission   | Agent       | Retrieve total commission and transactions (based on the token)                                                         |
+| 6           | POST       | /transaction/complete/:id    | User        | Marks a transaction (by its ID) as complete. Only allowed for transaction types: Add-money, Withdraw-money, Send-money! |
 
 ## 💳 Digital Wallet API – eWallet – Action Mapping
 
