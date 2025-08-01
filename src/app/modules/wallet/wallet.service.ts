@@ -96,16 +96,17 @@ const addMoney = async (userId: string, amount: number, source: string) => {
       throw new AppError(403, "Wallet is blocked");
     }
 
-    wallet.balance += amount;
-    wallet.balance = Number(wallet.balance.toFixed(2));
-    await wallet.save({ session });
+    amount = Number(amount.toFixed(2));
+    // wallet.balance += amount;
+    // wallet.balance = Number(wallet.balance.toFixed(2));
+    // await wallet.save({ session });
 
     const [transaction] = await Transaction.create(
       [
         {
           type: TransactionTypeEnum.Add,
           amount,
-          status: TransactionStatusEnum.Completed,
+          status: TransactionStatusEnum.Pending,
           source,
           receiver: userId,
           createdBy: userId,
@@ -113,10 +114,12 @@ const addMoney = async (userId: string, amount: number, source: string) => {
       ],
       { session }
     );
+    let message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
+
     await session.commitTransaction();
     session.endSession();
-
-    return { wallet, transaction };
+    return { message, transaction };
+    // return { wallet, transaction };
   } catch (error) {
     await session.abortTransaction();
     session.endSession();

@@ -248,10 +248,78 @@ const getMyCommission = async (userId: string) => {
   }
 };
 
+const completeTransaction = async (originalTxId: string, userId: string) => {
+  const session = await Transaction.startSession();
+  session.startTransaction();
+
+  try {
+    const originalTx = await Transaction.findById(originalTxId).session(
+      session
+    );
+    if (!originalTx) {
+      throw new AppError(404, "Transaction not found.");
+    }
+    if (originalTx.receiver?.toString() !== userId) {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        "You are not authorized to complete this transaction. It does not belong to you."
+      );
+    }
+    if (originalTx.status === TransactionStatusEnum.Completed) {
+      throw new AppError(
+        httpStatus.CONFLICT,
+        "Transaction is already Completed"
+      );
+    }
+    if (originalTx.status === TransactionStatusEnum.Reversed) {
+      throw new AppError(httpStatus.CONFLICT, "Transaction already reversed.");
+    }
+    if (originalTx.status !== TransactionStatusEnum.Pending) {
+      throw new AppError(
+        httpStatus.CONFLICT,
+        `"${originalTx.status}"! This Transaction status not Recognized!`
+      );
+    }
+
+    const amount = Number(originalTx.amount.toFixed(2));
+    if (originalTx.type !== TransactionTypeEnum.Add) {
+      throw new AppError(
+        400,
+        "Only 'Add-money' transactions can be completed here."
+      );
+    }
+
+    if (originalTx.type === TransactionTypeEnum.Add) {
+      const userWallet = await Wallet.findOne({ user: userId }).session(
+        session
+      );
+
+      if (!userWallet) {
+        throw new AppError(404, "Wallet not found.");
+      }
+      userWallet.balance += amount;
+      userWallet.balance = Number(userWallet.balance.toFixed(2));
+      await userWallet.save({ session });
+      originalTx.status = TransactionStatusEnum.Completed;
+      await originalTx.save({ session });
+
+      await session.commitTransaction();
+      session.endSession();
+
+      return userWallet;
+    }
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
+};
+
 export const TransactionService = {
   getMyTransactions,
   getAllTransactions,
   reverseTransaction,
   singleTransaction,
   getMyCommission,
+  completeTransaction,
 };

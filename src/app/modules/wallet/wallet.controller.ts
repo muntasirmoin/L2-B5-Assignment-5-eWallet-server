@@ -55,8 +55,8 @@ const addMoney = catchAsync(async (req: Request, res: Response) => {
 
   res.status(200).json({
     success: true,
-    message: "Money added successfully",
-    data: wallet,
+    message: wallet.message, //"Money added successfully",
+    data: wallet.transaction,
   });
 });
 

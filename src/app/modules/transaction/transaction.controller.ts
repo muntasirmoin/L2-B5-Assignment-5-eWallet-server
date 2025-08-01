@@ -87,10 +87,28 @@ const getMyCommission = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const completeTransaction = catchAsync(async (req: Request, res: Response) => {
+  const userId = (req.user as JwtPayload).userId;
+  const transactionId = req.params.id;
+
+  const completeTx = await TransactionService.completeTransaction(
+    transactionId,
+    userId
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Transaction Completed successfully.",
+    data: completeTx,
+  });
+});
+
 export const TransactionController = {
   getMyTransactions,
   getAllTransactions,
   reverseTransaction,
   singleTransaction,
   getMyCommission,
+  completeTransaction,
 };

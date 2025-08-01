@@ -29,6 +29,12 @@ router.post(
   TransactionController.reverseTransaction
 );
 
+router.post(
+  "/complete/:id",
+  checkAuth(Role.USER),
+  TransactionController.completeTransaction
+);
+
 router.get(
   "/:id",
   checkAuth(Role.ADMIN),
