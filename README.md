@@ -3,7 +3,7 @@
 <h3 align="center">Develop E-WALLET Management System using Express, TypeScript, and MongoDB (via Mongoose). </h3>
 
 <p align="center">
-  A full-featured RESTful API for managing financial operations such as add-money, withdraw-money, send-money, cash-in, cash-out!..
+  A full-featured RESTful API for managing financial operations such as add-money, withdraw-money, send-money, cash-in, cash-out!
 </p>
 
 ## 📖 Overview
@@ -21,6 +21,19 @@ The system is designed to be user-friendly, secure, and scalable, offering a sea
 ---
 
 ---
+
+## ✅ API Overview
+
+## 🚀 USER API Routes
+
+| **Sl. No.** | **Method** | **Endpoint**             | **Access**                     | **Description**                                                                                                               |
+| ----------- | ---------- | ------------------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| 1           | POST       | /user/register           | Public                         | Register New User                                                                                                             |
+| 2           | GET        | /user/me                 | All Roles (user, agent, admin) | Get the current user's profile (based on the token)                                                                           |
+| 3           | PATCH      | /user/approval-agent/:id | Admin Only                     | Approve or suspend an agent by ID                                                                                             |
+| 4           | GET        | /user/get-all-user       | Admin Only                     | Retrieve all user role accounts                                                                                               |
+| 5           | PATCH      | /user/profile-update     | All Roles (user, agent, admin) | Update the currently authenticated user's profile (self-update only). Only allows updating name, email, address, and picture. |
+| 6           | PATCH      | /user/:id                | Admin Only                     | Update a user/agent by ID                                                                                                     |
 
 ## 💳 Digital Wallet API – eWallet – Action Mapping
 
