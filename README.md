@@ -24,6 +24,12 @@ The system is designed to be user-friendly, secure, and scalable, offering a sea
 
 ## ✅ API Overview
 
+**Vercel Deploy Link**
+
+```bash
+ https://e-wallet-server-olive.vercel.app/
+```
+
 All API endpoints are prefixed with `/api/v1`
 Below are the categorized API routes for this project:
 
