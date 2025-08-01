@@ -87,8 +87,8 @@ const withdraw = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Cash Withdraw successfully",
-    data: result,
+    message: result.message, //"Cash Withdraw successfully",
+    data: result.transaction,
   });
 });
 

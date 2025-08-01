@@ -8,7 +8,7 @@ import {
   TransactionTypeEnum,
 } from "./transaction.interface";
 import { Wallet } from "../wallet/wallet.model";
-import { IWallet } from "../wallet/wallet.interface";
+import { IWallet, WalletStatus } from "../wallet/wallet.interface";
 import { Document } from "mongoose";
 type WalletDocument = IWallet & Document;
 
@@ -269,12 +269,35 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
     if (!originalTx) {
       throw new AppError(404, "Transaction not found.");
     }
-    if (originalTx.receiver?.toString() !== userId) {
-      throw new AppError(
-        httpStatus.FORBIDDEN,
-        "You are not authorized to complete this transaction. It does not belong to you."
-      );
+    //  add
+    if (originalTx.type === TransactionTypeEnum.Add) {
+      if (originalTx.receiver?.toString() !== userId) {
+        throw new AppError(
+          httpStatus.FORBIDDEN,
+          "You are not authorized to complete this transaction. It does not belong to you."
+        );
+      }
     }
+    // withdraw
+    if (originalTx.type === TransactionTypeEnum.Withdraw) {
+      if (originalTx.sender?.toString() !== userId) {
+        throw new AppError(
+          httpStatus.FORBIDDEN,
+          "You are not authorized to complete this transaction. It does not belong to you."
+        );
+      }
+    }
+
+    // send-money
+    if (originalTx.type === TransactionTypeEnum.Send) {
+      if (originalTx.sender?.toString() !== userId) {
+        throw new AppError(
+          httpStatus.FORBIDDEN,
+          "You are not authorized to complete this transaction. It does not belong to you."
+        );
+      }
+    }
+    // status logic
     if (originalTx.status === TransactionStatusEnum.Completed) {
       throw new AppError(
         httpStatus.CONFLICT,
@@ -292,13 +315,19 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
     }
 
     const amount = Number(originalTx.amount.toFixed(2));
-    if (originalTx.type !== TransactionTypeEnum.Add) {
+    // if (originalTx.type !== TransactionTypeEnum.Add )
+    const allowedTypes = [
+      TransactionTypeEnum.Add,
+      TransactionTypeEnum.Withdraw,
+    ];
+
+    if (!allowedTypes.includes(originalTx.type)) {
       throw new AppError(
         400,
-        "Only 'Add-money' transactions can be completed here."
+        "Only 'Add-money' or 'Withdraw-money' transactions can be completed here."
       );
     }
-
+    // add-money
     if (originalTx.type === TransactionTypeEnum.Add) {
       const userWallet = await Wallet.findOne({ user: userId }).session(
         session
@@ -307,6 +336,10 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
       if (!userWallet) {
         throw new AppError(404, "Wallet not found.");
       }
+      if (userWallet.isBlocked === WalletStatus.BLOCKED) {
+        throw new AppError(403, "Your wallet is blocked.");
+      }
+
       userWallet.balance += amount;
       userWallet.balance = Number(userWallet.balance.toFixed(2));
       await userWallet.save({ session });
@@ -316,7 +349,7 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
       //
       const timestamp = new Date().toLocaleString();
       console.log(
-        `[Notification] Transaction Id: ${originalTx._id} marked as Completed! Amount: ${amount}. Time: ${timestamp}`
+        `[Notification] Transaction Id[add-money]: ${originalTx._id} marked as Completed! Amount: ${amount}. Time: ${timestamp}`
       );
 
       await session.commitTransaction();
@@ -324,6 +357,45 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
 
       return userWallet;
     }
+
+    // withdraw-money
+
+    if (originalTx.type === TransactionTypeEnum.Withdraw) {
+      const userWallet = await Wallet.findOne({ user: userId }).session(
+        session
+      );
+
+      if (!userWallet) {
+        throw new AppError(404, "Wallet not found.");
+      }
+      if (userWallet.isBlocked === WalletStatus.BLOCKED) {
+        throw new AppError(403, "Your wallet is blocked.");
+      }
+
+      // userWallet.balance -= amount;
+      // userWallet.balance = Number(userWallet.balance.toFixed(2));
+
+      // await userWallet.save({ session });
+
+      userWallet.balance -= amount;
+      userWallet.balance = Number(userWallet.balance.toFixed(2));
+      await userWallet.save({ session });
+      originalTx.status = TransactionStatusEnum.Completed;
+      await originalTx.save({ session });
+
+      //
+      const timestamp = new Date().toLocaleString();
+      console.log(
+        `[Notification] Transaction Id[Withdraw]: ${originalTx._id} marked as Completed! Amount: ${amount}. Time: ${timestamp}`
+      );
+
+      await session.commitTransaction();
+      session.endSession();
+
+      return userWallet;
+    }
+
+    // send-money
   } catch (error) {
     await session.abortTransaction();
     session.endSession();

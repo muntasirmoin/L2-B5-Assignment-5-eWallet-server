@@ -300,10 +300,10 @@ const withdraw = async (userId: string, source: string, amount: number) => {
     }
 
     // Update balances
-    userWallet.balance -= amount;
-    userWallet.balance = Number(userWallet.balance.toFixed(2));
+    // userWallet.balance -= amount;
+    // userWallet.balance = Number(userWallet.balance.toFixed(2));
 
-    await userWallet.save({ session });
+    // await userWallet.save({ session });
 
     const [transaction] = await Transaction.create(
       [
@@ -311,7 +311,7 @@ const withdraw = async (userId: string, source: string, amount: number) => {
           type: TransactionTypeEnum.Withdraw,
           amount,
           source,
-          status: TransactionStatusEnum.Completed,
+          status: TransactionStatusEnum.Pending,
           sender: userId,
 
           createdBy: userId,
@@ -322,12 +322,14 @@ const withdraw = async (userId: string, source: string, amount: number) => {
 
     const timestamp = new Date().toLocaleString();
     console.log(
-      `[Notification] Withdraw transaction Id: ${transaction._id}! Amount: ${amount}! Time: ${timestamp}`
+      `[Notification] Withdraw-money transaction ${transaction._id} created! Amount: ${amount}. Status: ${transaction.status}. Time: ${timestamp}`
     );
+
+    let message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
 
     await session.commitTransaction();
     session.endSession();
-    return { userWallet, transaction };
+    return { message, transaction };
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
