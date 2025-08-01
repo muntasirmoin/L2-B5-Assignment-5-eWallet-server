@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import httpStatus from "http-status-codes";
 import { catchAsync } from "../../utils/catchAsync";
@@ -24,23 +24,21 @@ const getMyTransactions = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getAllTransactions = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const query = req.query;
+const getAllTransactions = catchAsync(async (req: Request, res: Response) => {
+  const query = req.query;
 
-    const result = await TransactionService.getAllTransactions(
-      query as Record<string, string>
-    );
+  const result = await TransactionService.getAllTransactions(
+    query as Record<string, string>
+  );
 
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: `All Transaction retrieved successfully`,
-      data: result.data,
-      meta: result.meta,
-    });
-  }
-);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: `All Transaction retrieved successfully`,
+    data: result.data,
+    meta: result.meta,
+  });
+});
 
 const reverseTransaction = catchAsync(async (req: Request, res: Response) => {
   const adminId = (req.user as JwtPayload).userId;

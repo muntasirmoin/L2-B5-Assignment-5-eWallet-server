@@ -26,7 +26,7 @@ const getMyTransactions = async (
     );
   }
 
-  const queryTransaction: any = {
+  const queryTransaction: Record<string, unknown> = {
     $or: [{ sender: userId }, { receiver: userId }, { createdBy: userId }],
   };
 

@@ -130,7 +130,7 @@ const addMoney = async (userId: string, amount: number, source: string) => {
       `[Notification] Add-money transaction ${transaction._id} created! Amount: ${amount}. Status: ${transaction.status}. Time: ${timestamp}`
     );
 
-    let message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
+    const message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
 
     await session.commitTransaction();
     session.endSession();
@@ -240,7 +240,7 @@ const sendMoney = async (
     console.log(
       `[Notification] Send-Money transaction Id:${transaction._id}! status:${transaction.status} created by user ${senderId} to user ${receiverId}. Amount: ${amount}. Time: ${timestamp}`
     );
-    let message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
+    const message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
 
     await session.commitTransaction();
     session.endSession();
@@ -326,7 +326,7 @@ const withdraw = async (userId: string, source: string, amount: number) => {
       `[Notification] Withdraw-money transaction ${transaction._id} created! Amount: ${amount}. Status: ${transaction.status}. Time: ${timestamp}`
     );
 
-    let message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
+    const message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
 
     await session.commitTransaction();
     session.endSession();

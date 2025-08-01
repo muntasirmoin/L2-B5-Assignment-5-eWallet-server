@@ -11,6 +11,7 @@ import { AuthServices } from "./auth.service";
 
 const credentialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     passport.authenticate("local", async (err: any, user: any, info: any) => {
       console.log("user:", user);
       if (err) {
@@ -23,6 +24,7 @@ const credentialsLogin = catchAsync(
 
       const userTokens = await createUserTokens(user);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { pin: pass, ...rest } = user.toObject();
 
       setAuthCookie(res, userTokens);
@@ -46,71 +48,65 @@ const credentialsLogin = catchAsync(
   }
 );
 
-const logout = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.clearCookie("accessToken", {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-    });
-    res.clearCookie("refreshToken", {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-    });
+const logout = catchAsync(async (req: Request, res: Response) => {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
 
-    const timestamp = new Date().toLocaleString();
-    console.log(`[Notification] User logged out at ${timestamp}!`);
+  const timestamp = new Date().toLocaleString();
+  console.log(`[Notification] User logged out at ${timestamp}!`);
 
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "User Logged Out Successfully",
-      data: null,
-    });
-  }
-);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User Logged Out Successfully",
+    data: null,
+  });
+});
 
-const changePin = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const newPin = req.body.newPin;
-    const oldPin = req.body.oldPin;
-    const decodedToken = req.user;
+const changePin = catchAsync(async (req: Request, res: Response) => {
+  const newPin = req.body.newPin;
+  const oldPin = req.body.oldPin;
+  const decodedToken = req.user;
 
-    await AuthServices.changePin(oldPin, newPin, decodedToken as JwtPayload);
+  await AuthServices.changePin(oldPin, newPin, decodedToken as JwtPayload);
 
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "Pin Changed Successfully",
-      data: null,
-    });
-  }
-);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Pin Changed Successfully",
+    data: null,
+  });
+});
 
-const getNewAccessToken = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) {
-      throw new AppError(
-        httpStatus.BAD_REQUEST,
-        "No refresh token received from cookies"
-      );
-    }
-    const tokenInfo = await AuthServices.getNewAccessToken(
-      refreshToken as string
+const getNewAccessToken = catchAsync(async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "No refresh token received from cookies"
     );
-
-    setAuthCookie(res, tokenInfo);
-
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "Refresh Token Retrieved Successfully",
-      data: tokenInfo,
-    });
   }
-);
+  const tokenInfo = await AuthServices.getNewAccessToken(
+    refreshToken as string
+  );
+
+  setAuthCookie(res, tokenInfo);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Refresh Token Retrieved Successfully",
+    data: tokenInfo,
+  });
+});
 
 export const AuthControllers = {
   credentialsLogin,

@@ -1,15 +1,11 @@
 import { Router } from "express";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "../user/user.interface";
-import {
-  updateWalletIsBlockStatusZodSchema,
-  updateWalletZodSchema,
-} from "./wallet.validation";
+import { updateWalletIsBlockStatusZodSchema } from "./wallet.validation";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { WalletControllers } from "./wallet.controller";
 import {
   addMoneyZodSchema,
-  cashOutZodSchema,
   sendMoneyZodSchema,
   withdrawZodSchema,
 } from "../transaction/transaction.validation";

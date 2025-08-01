@@ -13,16 +13,20 @@ const changePin = async (
 ) => {
   const user = await User.findById(decodedToken.userId);
 
-  const isOldPinMatch = await bcryptjs.compare(oldPin, user!.pin as string);
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const isOldPinMatch = await bcryptjs.compare(oldPin, user.pin as string);
   if (!isOldPinMatch) {
     throw new AppError(httpStatus.UNAUTHORIZED, "Old Pin does not match");
   }
 
-  user!.pin = await bcryptjs.hash(newPin, Number(envVars.BCRYPT_SALT_ROUND));
+  user.pin = await bcryptjs.hash(newPin, Number(envVars.BCRYPT_SALT_ROUND));
   const timestamp = new Date().toLocaleString();
   console.log(`[Notification] Pin Changed Successfully at ${timestamp}`);
 
-  user!.save();
+  user.save();
 };
 
 const getNewAccessToken = async (refreshToken: string) => {

@@ -31,6 +31,7 @@ export const seedAdmin = async () => {
     };
 
     const admin = await User.create(payload);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { pin, ...adminSafe } = admin.toObject();
 
     console.log("[Notification] Admin Created Successfully!");

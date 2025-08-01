@@ -10,7 +10,7 @@ let server: Server;
 
 const startServer = async () => {
   try {
-    await mongoose.connect(envVars.DB_URL!);
+    await mongoose.connect(envVars.DB_URL);
 
     console.log("Connected to eWallet DataBase!");
     server = app.listen(envVars.PORT, () => {

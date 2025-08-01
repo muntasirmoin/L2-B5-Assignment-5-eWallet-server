@@ -1,10 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import httpStatus from "http-status-codes";
 import { JwtPayload } from "jsonwebtoken";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { WalletServices } from "./wallet.service";
-import AppError from "../../helpers/AppError";
 
 const updateWalletIsBlockStatus = catchAsync(
   async (req: Request, res: Response) => {
@@ -27,23 +26,21 @@ const updateWalletIsBlockStatus = catchAsync(
   }
 );
 
-const getAllWallet = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const query = req.query;
+const getAllWallet = catchAsync(async (req: Request, res: Response) => {
+  const query = req.query;
 
-    const result = await WalletServices.getAllWallet(
-      query as Record<string, string>
-    );
+  const result = await WalletServices.getAllWallet(
+    query as Record<string, string>
+  );
 
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: `All Wallet retrieved successfully`,
-      data: result.data,
-      meta: result.meta,
-    });
-  }
-);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: `All Wallet retrieved successfully`,
+    data: result.data,
+    meta: result.meta,
+  });
+});
 
 const addMoney = catchAsync(async (req: Request, res: Response) => {
   const decodeToken = req.user as JwtPayload;

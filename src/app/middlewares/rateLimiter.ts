@@ -20,6 +20,7 @@ export const loginRateLimiter = rateLimit({
       message: `Too many login attempts. Please try again in ${
         retryAfterSeconds / 60
       } minutes.`,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: null as any,
     });
   },
