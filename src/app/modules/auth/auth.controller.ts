@@ -27,6 +27,11 @@ const credentialsLogin = catchAsync(
 
       setAuthCookie(res, userTokens);
 
+      const timestamp = new Date().toLocaleString();
+      console.log(
+        `[Notification] Account Logged In Successfully at ${timestamp}.`
+      );
+
       sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
@@ -53,6 +58,9 @@ const logout = catchAsync(
       secure: false,
       sameSite: "lax",
     });
+
+    const timestamp = new Date().toLocaleString();
+    console.log(`[Notification] User logged out at ${timestamp}!`);
 
     sendResponse(res, {
       success: true,

@@ -19,6 +19,8 @@ const changePin = async (
   }
 
   user!.pin = await bcryptjs.hash(newPin, Number(envVars.BCRYPT_SALT_ROUND));
+  const timestamp = new Date().toLocaleString();
+  console.log(`[Notification] Pin Changed Successfully at ${timestamp}`);
 
   user!.save();
 };
@@ -26,6 +28,11 @@ const changePin = async (
 const getNewAccessToken = async (refreshToken: string) => {
   const newAccessToken = await createNewAccessTokenWithRefreshToken(
     refreshToken
+  );
+
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] Refresh Token Retrieved Successfully at ${timestamp}`
   );
 
   return {
