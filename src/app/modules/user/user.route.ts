@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { UserControllers } from "./user.controller";
 import { validateRequest } from "../../middlewares/validateRequest";
-import { createUserZodSchema, updateUserZodSchema } from "./user.validation";
+import {
+  changeAgentApprovalStatusZodSchema,
+  createUserZodSchema,
+  updateUserZodSchema,
+} from "./user.validation";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "./user.interface";
 
@@ -16,12 +20,6 @@ router.post(
 router.get("/me", checkAuth(...Object.values(Role)), UserControllers.getMe);
 
 router.patch(
-  "/approval-agent/:id",
-  checkAuth(Role.ADMIN),
-  UserControllers.changeAgentApprovalStatus
-);
-
-router.patch(
   "/profile-update",
   checkAuth(...Object.values(Role)),
   validateRequest(updateUserZodSchema),
@@ -29,6 +27,14 @@ router.patch(
 );
 
 router.get("/get-all-user", checkAuth(Role.ADMIN), UserControllers.getAllUsers);
+
+router.patch(
+  "/approval-agent/:id",
+  checkAuth(Role.ADMIN),
+  validateRequest(changeAgentApprovalStatusZodSchema),
+  UserControllers.changeAgentApprovalStatus
+);
+
 router.patch(
   "/:id",
   checkAuth(Role.ADMIN),

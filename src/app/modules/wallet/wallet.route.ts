@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "../user/user.interface";
-import { updateWalletZodSchema } from "./wallet.validation";
+import {
+  updateWalletIsBlockStatusZodSchema,
+  updateWalletZodSchema,
+} from "./wallet.validation";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { WalletControllers } from "./wallet.controller";
 import {
@@ -42,7 +45,7 @@ router.post(
 router.patch(
   "/:id",
   checkAuth(Role.ADMIN),
-  validateRequest(updateWalletZodSchema),
+  validateRequest(updateWalletIsBlockStatusZodSchema),
   WalletControllers.updateWalletIsBlockStatus
 );
 

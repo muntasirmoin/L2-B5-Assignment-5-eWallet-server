@@ -105,3 +105,9 @@ export const updateUserZodSchema = z.object({
     .int({ message: "Permission level must be an integer." })
     .optional(),
 });
+
+export const changeAgentApprovalStatusZodSchema = z.object({
+  isAgentApproved: z.boolean({
+    invalid_type_error: "isAgentApproved Must be a boolean",
+  }),
+});

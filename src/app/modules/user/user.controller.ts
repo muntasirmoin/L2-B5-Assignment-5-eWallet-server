@@ -39,6 +39,7 @@ const getMe = catchAsync(
 export const changeAgentApprovalStatus = catchAsync(
   async (req: Request, res: Response) => {
     const userId = req.params.id;
+    console.log("userId:  ", userId);
     const { isAgentApproved } = req.body;
 
     const updatedAgent = await UserServices.changeAgentApprovalStatus(

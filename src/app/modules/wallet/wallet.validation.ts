@@ -39,3 +39,10 @@ export const updateWalletZodSchema = z.object({
     .string({ invalid_type_error: "Currency must be a string." })
     .optional(),
 });
+
+export const updateWalletIsBlockStatusZodSchema = z.object({
+  isBlocked: z.enum([WalletStatus.BLOCKED, WalletStatus.UNBLOCKED], {
+    required_error: "isBlocked is required.",
+    invalid_type_error: "isBlocked must be either 'blocked' or 'unblocked'.",
+  }),
+});

@@ -18,15 +18,28 @@ const updateWalletIsBlockStatus = async (
 ) => {
   const { isBlocked } = payload;
 
-  const updatedWallet = await Wallet.findByIdAndUpdate(
-    walletId,
-    { isBlocked },
-    { new: true, runValidators: true }
-  );
+  const wallet = await Wallet.findById(walletId);
 
-  if (!updatedWallet) {
-    throw new AppError(httpStatus.NOT_FOUND, "Wallet not found for update!");
+  if (!wallet) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      "Wallet not found for Block update!"
+    );
   }
+  console.log("isBlocked", isBlocked, "wallet.isBlocked", wallet.isBlocked);
+  if (wallet.isBlocked === isBlocked) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `Wallet is already ${isBlocked}!`
+    );
+  }
+  // const updatedWallet = await Wallet.findByIdAndUpdate(
+  //   walletId,
+  //   { isBlocked },
+  //   { new: true, runValidators: true }
+  // );
+  wallet.isBlocked = isBlocked;
+  const updatedWallet = await wallet.save();
 
   return updatedWallet;
 };

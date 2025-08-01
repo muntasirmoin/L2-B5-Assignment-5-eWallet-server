@@ -216,19 +216,34 @@ const singleTransaction = async (transactionId: string) => {
 
 const getMyCommission = async (userId: string) => {
   if (!userId) {
-    throw new AppError(401, "user  ID is missing.");
+    throw new AppError(401, "User ID is missing.");
   }
 
-  const myCommission = await Transaction.findOne({ receiver: userId }).populate(
+  const myCommissions = await Transaction.find({ receiver: userId }).populate(
     "receiver",
     "name"
   );
-  if (myCommission?.type === "cash-out") {
-    return { myCommission };
+
+  const validCommissions = myCommissions.filter(
+    (commission) =>
+      commission.type === "cash-out" &&
+      commission.status === TransactionStatusEnum.Completed
+  );
+
+  if (validCommissions.length > 0) {
+    const totalCommission = validCommissions.reduce(
+      (sum, tx) => sum + (tx.commission || 0),
+      0
+    );
+
+    return {
+      totalCommission: Number(totalCommission.toFixed(2)),
+      myCommissionTransactions: validCommissions,
+    };
   } else {
     throw new AppError(
       400,
-      "you only get commission from cash-out type transaction"
+      "You only get commission from cash-out type transactions."
     );
   }
 };

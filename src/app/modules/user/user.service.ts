@@ -74,19 +74,33 @@ export const changeAgentApprovalStatus = async (
   userId: string,
   isAgentApproved: boolean
 ) => {
-  const updatedAgent = await User.findByIdAndUpdate(
-    userId,
-    { isAgentApproved },
-    { new: true, runValidators: true }
-  );
+  const user = await User.findById(userId);
 
-  if (!updatedAgent) {
+  if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "Account not found!");
   }
 
-  if (updatedAgent.role !== "agent") {
+  if (user.role !== "agent") {
     throw new AppError(httpStatus.BAD_REQUEST, "This is not an agent Account!");
   }
+
+  if (user.isAgentApproved === isAgentApproved) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `This agent Account is already ${
+        isAgentApproved ? "Approved" : "Suspend"
+      }!`
+    );
+  }
+
+  // const updatedAgent = await User.findByIdAndUpdate(
+  //   userId,
+  //   { isAgentApproved },
+  //   { new: true, runValidators: true }
+  // );
+  // Update approval status
+  user.isAgentApproved = isAgentApproved;
+  const updatedAgent = await user.save();
 
   return updatedAgent;
 };
