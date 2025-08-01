@@ -185,29 +185,33 @@ src/
    PORT=5000
    DB_URL=
    NODE_ENV=
+   #jwt
+   JWT_ACCESS_SECRET=
+   JWT_ACCESS_EXPIRES=
+   JWT_REFRESH_SECRET=
+   JWT_REFRESH_EXPIRES=
+   #BCRYPT
+   BCRYPT_SALT_ROUND=
+      #admin credential
+       ADMIN_PHONE=
+   ADMIN_PIN=
    ```
 
-#jwt
-JWT_ACCESS_SECRET=
-JWT_ACCESS_EXPIRES=
-JWT_REFRESH_SECRET=
-JWT_REFRESH_EXPIRES=
+```
 
-#BCRYPT
-BCRYPT_SALT_ROUND=
 
-#admin credential
 
-ADMIN_PHONE=
-ADMIN_PIN=
+```
 
-````
+```
 
-4. **Start the Development Server**
+```
+
+1. **Start the Development Server**
 
 ```bash
 npm run dev
-````
+```
 
 You should see output like:
 
