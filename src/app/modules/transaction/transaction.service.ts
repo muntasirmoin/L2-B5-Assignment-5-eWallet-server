@@ -316,9 +316,11 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
 
     const amount = Number(originalTx.amount.toFixed(2));
     // if (originalTx.type !== TransactionTypeEnum.Add )
+    // type allowed for complete transaction
     const allowedTypes = [
       TransactionTypeEnum.Add,
       TransactionTypeEnum.Withdraw,
+      TransactionTypeEnum.Send,
     ];
 
     if (!allowedTypes.includes(originalTx.type)) {
@@ -372,6 +374,13 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
         throw new AppError(403, "Your wallet is blocked.");
       }
 
+      if (userWallet.balance < amount) {
+        throw new AppError(
+          400,
+          `Insufficient withdraw balance ${amount} ${userWallet.currency}! Your Balance is :${userWallet.balance}${userWallet.currency}!`
+        );
+      }
+
       // userWallet.balance -= amount;
       // userWallet.balance = Number(userWallet.balance.toFixed(2));
 
@@ -396,6 +405,57 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
     }
 
     // send-money
+    if (originalTx.type === TransactionTypeEnum.Send) {
+      const senderWallet = await Wallet.findOne({ user: userId }).session(
+        session
+      );
+
+      const receiverWallet = await Wallet.findOne({
+        user: originalTx.receiver,
+      }).session(session);
+
+      if (!senderWallet) {
+        throw new AppError(404, "Sender  wallet not found.");
+      }
+      if (!receiverWallet) {
+        throw new AppError(404, "Receiver wallet not found.");
+      }
+
+      if (senderWallet.isBlocked === WalletStatus.BLOCKED) {
+        throw new AppError(403, "Your wallet is blocked.");
+      }
+
+      if (receiverWallet.isBlocked === WalletStatus.BLOCKED) {
+        throw new AppError(403, "Receiver wallet is blocked.");
+      }
+
+      if (senderWallet.balance < amount) {
+        throw new AppError(
+          400,
+          `Insufficient send money balance ${amount} ${senderWallet.currency}! Your Balance is :${senderWallet.balance}${senderWallet.currency}!`
+        );
+      }
+
+      // Update balances
+      senderWallet.balance -= amount;
+      senderWallet.balance = Number(senderWallet.balance.toFixed(2));
+      receiverWallet.balance += amount;
+      receiverWallet.balance = Number(receiverWallet.balance.toFixed(2));
+
+      await senderWallet.save({ session });
+      await receiverWallet.save({ session });
+      originalTx.status = TransactionStatusEnum.Completed;
+      await originalTx.save({ session });
+      const timestamp = new Date().toLocaleString();
+      console.log(
+        `[Notification] Transaction Id[send-money]: ${originalTx._id} marked as Completed! Amount: ${amount}. Time: ${timestamp}`
+      );
+
+      await session.commitTransaction();
+      session.endSession();
+
+      return senderWallet;
+    }
   } catch (error) {
     await session.abortTransaction();
     session.endSession();

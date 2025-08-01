@@ -71,8 +71,8 @@ const sendMoney = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Money sent successfully",
-    data: result,
+    message: result.message, //"Money sent successfully",
+    data: result.transaction,
   });
 });
 

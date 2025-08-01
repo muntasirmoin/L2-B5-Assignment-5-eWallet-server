@@ -214,20 +214,20 @@ const sendMoney = async (
     }
 
     // Update balances
-    senderWallet.balance -= amount;
-    senderWallet.balance = Number(senderWallet.balance.toFixed(2));
-    receiverWallet.balance += amount;
-    receiverWallet.balance = Number(receiverWallet.balance.toFixed(2));
+    // senderWallet.balance -= amount;
+    // senderWallet.balance = Number(senderWallet.balance.toFixed(2));
+    // receiverWallet.balance += amount;
+    // receiverWallet.balance = Number(receiverWallet.balance.toFixed(2));
 
-    await senderWallet.save({ session });
-    await receiverWallet.save({ session });
+    // await senderWallet.save({ session });
+    // await receiverWallet.save({ session });
 
     const [transaction] = await Transaction.create(
       [
         {
           type: TransactionTypeEnum.Send,
           amount,
-          status: TransactionStatusEnum.Completed,
+          status: TransactionStatusEnum.Pending,
           sender: senderId,
           receiver: receiverId,
           createdBy: senderId,
@@ -238,12 +238,13 @@ const sendMoney = async (
 
     const timestamp = new Date().toLocaleString();
     console.log(
-      `[Notification] Send-Money transaction Id:${transaction._id} created by user ${senderId} to user ${receiverId}. Amount: ${amount}. Time: ${timestamp}`
+      `[Notification] Send-Money transaction Id:${transaction._id}! status:${transaction.status} created by user ${senderId} to user ${receiverId}. Amount: ${amount}. Time: ${timestamp}`
     );
+    let message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
 
     await session.commitTransaction();
     session.endSession();
-    return { myWallet: senderWallet, transaction };
+    return { message, transaction };
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
