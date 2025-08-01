@@ -33,6 +33,12 @@ The system is designed to be user-friendly, secure, and scalable, offering a sea
 All API endpoints are prefixed with `/api/v1`
 Below are the categorized API routes for this project:
 
+Use the following base URL for making requests to the production API:
+
+```bash
+ https://e-wallet-server-olive.vercel.app/api/v1
+```
+
 ## 🚀 Auth API Routes
 
 | **Sl. No.** | **Method** | **Endpoint**        | **Access**                      | **Description**                                                |
