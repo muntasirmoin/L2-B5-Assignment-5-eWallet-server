@@ -28,10 +28,7 @@ const updateWalletIsBlockStatus = async (
   }
   console.log("isBlocked", isBlocked, "wallet.isBlocked", wallet.isBlocked);
   if (wallet.isBlocked === isBlocked) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      `Wallet is already ${isBlocked}!`
-    );
+    throw new AppError(httpStatus.CONFLICT, `Wallet is already ${isBlocked}!`);
   }
   // const updatedWallet = await Wallet.findByIdAndUpdate(
   //   walletId,

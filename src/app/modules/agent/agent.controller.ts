@@ -44,7 +44,7 @@ const cashIn = catchAsync(async (req: Request, res: Response) => {
   const decodeToken = req.user as JwtPayload;
 
   const senderId = decodeToken.userId;
-  const { receiver, amount } = req.body;
+  const { userId: receiver, amount } = req.body;
 
   const result = await AgentServices.cashIn(senderId, receiver, amount);
 

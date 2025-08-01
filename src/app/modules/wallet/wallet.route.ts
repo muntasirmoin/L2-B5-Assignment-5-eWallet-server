@@ -43,7 +43,7 @@ router.post(
 );
 
 router.patch(
-  "/:id",
+  "/block/:id",
   checkAuth(Role.ADMIN),
   validateRequest(updateWalletIsBlockStatusZodSchema),
   WalletControllers.updateWalletIsBlockStatus
