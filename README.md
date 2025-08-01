@@ -114,3 +114,23 @@ Below are the categorized API routes for this project:
 
 - **📈 Versioned API Endpoints**  
   All APIs are under `/api/v1` prefix, allowing for smooth upgrades compatibility.
+
+## 📂 Structure Overview
+
+src/
+├── app/
+│ ├── config/
+│ ├── constants/
+│ ├── helpers/
+│ ├── interfaces/
+│ ├── middlewares/
+│ ├── modules/
+│ │ ├── agent/
+│ │ ├── auth/
+│ │ ├── transaction/
+│ │ ├── user/
+│ │ └── wallet/
+│ ├── routes/
+│ └── utils/
+├── app.ts
+└── server.ts
