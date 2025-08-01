@@ -181,28 +181,23 @@ src/
 
    Create a `.env` file in the root directory and add the following:
 
-PORT=5000
-DB_URL=
+   ```env
+   PORT=5000
+   DB_URL=
+   NODE_ENV=
+   #jwt
+   JWT_ACCESS_SECRET=
+   JWT_ACCESS_EXPIRES=
+   JWT_REFRESH_SECRET=
+   JWT_REFRESH_EXPIRES=
+   #BCRYPT
+   BCRYPT_SALT_ROUND=
+   #admin credential
+   ADMIN_PHONE=
+   ADMIN_PIN=
+   ```
 
-NODE_ENV=
-
-# JWT
-
-JWT_ACCESS_SECRET=
-JWT_ACCESS_EXPIRES=
-JWT_REFRESH_SECRET=
-JWT_REFRESH_EXPIRES=
-
-# BCRYPT
-
-BCRYPT_SALT_ROUND=
-
-# Admin credentials
-
-ADMIN_PHONE=
-ADMIN_PIN=
-
-1. **Start the Development Server**
+4. **Start the Development Server**
 
 ```bash
 npm run dev
