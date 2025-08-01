@@ -127,10 +127,35 @@ src/
 │   ├── middlewares/
 │   ├── modules/
 │   │   ├── agent/
+│   │   │   ├── agent.controller.ts
+│   │   │   ├── agent.service.ts
+│   │   │   ├── agent.route.ts
 │   │   ├── auth/
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.service.ts
+│   │   │   ├── auth.route.ts
+
 │   │   ├── transaction/
+│   │   │   ├── transaction.controller.ts
+│   │   │   ├── transaction.model.ts
+│   │   │   ├── transaction.service.ts
+│   │   │   ├── transaction.interface.ts
+│   │   │   ├── transaction.route.ts
+│   │   │   └── transaction.validation.ts
 │   │   ├── user/
+│   │   │   ├── user.controller.ts
+│   │   │   ├── user.model.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── user.interface.ts
+│   │   │   ├── user.route.ts
+│   │   │   └── user.validation.ts
 │   │   └── wallet/
+│   │       ├── wallet.controller.ts
+│   │       ├── wallet.model.ts
+│   │       ├── wallet.service.ts
+│   │       ├── wallet.interface.ts
+│   │       ├── wallet.route.ts
+│   │       └── wallet.validation.ts
 │   ├── routes/
 │   └── utils/
 ├── app.ts
