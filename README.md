@@ -162,3 +162,56 @@ src/
 └── server.ts
 
 ```
+
+### 📦 Installation Steps
+
+1. **Clone the Repository**
+
+   ```bash
+    https://github.com/muntasirmoin/L2-B5-Assignment-5-eWallet-server.git
+   ```
+
+2. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Create Environment Variables File**
+
+   Create a `.env` file in the root directory and add the following:
+
+   ```env
+   PORT=5000
+   DB_URL=
+   NODE_ENV=
+   ```
+
+#jwt
+JWT_ACCESS_SECRET=
+JWT_ACCESS_EXPIRES=
+JWT_REFRESH_SECRET=
+JWT_REFRESH_EXPIRES=
+
+#BCRYPT
+BCRYPT_SALT_ROUND=
+
+#admin credential
+
+ADMIN_PHONE=
+ADMIN_PIN=
+
+````
+
+4. **Start the Development Server**
+
+```bash
+npm run dev
+````
+
+You should see output like:
+
+```
+Connected to eWallet DataBase!
+eWallet Server is listening on port: port.number
+```
