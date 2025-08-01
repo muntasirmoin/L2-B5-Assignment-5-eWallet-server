@@ -64,7 +64,7 @@ const sendMoney = catchAsync(async (req: Request, res: Response) => {
   const decodeToken = req.user as JwtPayload;
 
   const senderId = decodeToken.userId;
-  const { receiver, amount } = req.body;
+  const { receiverUserId: receiver, amount } = req.body;
 
   const result = await WalletServices.sendMoney(senderId, receiver, amount);
 

@@ -134,7 +134,7 @@ const sendMoney = async (
     throw new AppError(400, "Same sender & receiver.");
   }
 
-  if (!senderId || !receiverId) {
+  if (!senderId) {
     throw new AppError(401, "Sender ID is missing.");
   }
   if (!receiverId) {
@@ -219,7 +219,7 @@ const sendMoney = async (
 
     await session.commitTransaction();
     session.endSession();
-    return { senderWallet, transaction };
+    return { myWallet: senderWallet, transaction };
   } catch (error) {
     await session.abortTransaction();
     session.endSession();

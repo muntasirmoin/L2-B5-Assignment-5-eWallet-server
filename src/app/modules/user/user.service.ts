@@ -93,14 +93,14 @@ export const changeAgentApprovalStatus = async (
     );
   }
 
-  // const updatedAgent = await User.findByIdAndUpdate(
-  //   userId,
-  //   { isAgentApproved },
-  //   { new: true, runValidators: true }
-  // );
+  const updatedAgent = await User.findByIdAndUpdate(
+    userId,
+    { isAgentApproved },
+    { new: true, runValidators: true, select: "-pin" }
+  );
   // Update approval status
-  user.isAgentApproved = isAgentApproved;
-  const updatedAgent = await user.save();
+  // user.isAgentApproved = isAgentApproved;
+  // const updatedAgent = await user.save();
 
   return updatedAgent;
 };
