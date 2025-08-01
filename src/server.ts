@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { envVars } from "./app/config/env";
 import app from "./app";
 import { gracefulShutdown } from "./app/utils/gracefulShutdown";
+import { seedAdmin } from "./app/utils/seedAdmin ";
 
 let server: Server;
 
@@ -22,6 +23,7 @@ const startServer = async () => {
 
 (async () => {
   await startServer();
+  await seedAdmin();
 })();
 
 process.on("unhandledRejection", (err) => {
