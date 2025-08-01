@@ -117,20 +117,23 @@ Below are the categorized API routes for this project:
 
 ## 📂 Structure Overview
 
+```
 src/
 ├── app/
-│ ├── config/
-│ ├── constants/
-│ ├── helpers/
-│ ├── interfaces/
-│ ├── middlewares/
-│ ├── modules/
-│ │ ├── agent/
-│ │ ├── auth/
-│ │ ├── transaction/
-│ │ ├── user/
-│ │ └── wallet/
-│ ├── routes/
-│ └── utils/
+│   ├── config/
+│   ├── constants/
+│   ├── helpers/
+│   ├── interfaces/
+│   ├── middlewares/
+│   ├── modules/
+│   │   ├── agent/
+│   │   ├── auth/
+│   │   ├── transaction/
+│   │   ├── user/
+│   │   └── wallet/
+│   ├── routes/
+│   └── utils/
 ├── app.ts
 └── server.ts
+
+```
