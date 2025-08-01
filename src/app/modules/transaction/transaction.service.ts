@@ -44,6 +44,11 @@ const getMyTransactions = async (
     queryBuilder.getMeta(),
   ]);
 
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification]My Transactions retrieved! at ${timestamp}. Total records: ${data.length}`
+  );
+
   return {
     data,
     meta,
@@ -302,6 +307,12 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
       await userWallet.save({ session });
       originalTx.status = TransactionStatusEnum.Completed;
       await originalTx.save({ session });
+
+      //
+      const timestamp = new Date().toLocaleString();
+      console.log(
+        `[Notification] Transaction Id: ${originalTx._id} marked as Completed! Amount: ${amount}. Time: ${timestamp}`
+      );
 
       await session.commitTransaction();
       session.endSession();

@@ -114,6 +114,12 @@ const addMoney = async (userId: string, amount: number, source: string) => {
       ],
       { session }
     );
+
+    const timestamp = new Date().toLocaleString();
+    console.log(
+      `[Notification] Add-money transaction ${transaction._id} created! Amount: ${amount}. Status: ${transaction.status}. Time: ${timestamp}`
+    );
+
     let message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
 
     await session.commitTransaction();
@@ -220,6 +226,11 @@ const sendMoney = async (
       { session }
     );
 
+    const timestamp = new Date().toLocaleString();
+    console.log(
+      `[Notification] Send-Money transaction Id:${transaction._id} created by user ${senderId} to user ${receiverId}. Amount: ${amount}. Time: ${timestamp}`
+    );
+
     await session.commitTransaction();
     session.endSession();
     return { myWallet: senderWallet, transaction };
@@ -299,6 +310,11 @@ const withdraw = async (userId: string, source: string, amount: number) => {
       { session }
     );
 
+    const timestamp = new Date().toLocaleString();
+    console.log(
+      `[Notification] Withdraw transaction Id: ${transaction._id}! Amount: ${amount}! Time: ${timestamp}`
+    );
+
     await session.commitTransaction();
     session.endSession();
     return { userWallet, transaction };
@@ -317,6 +333,15 @@ const getMyWallet = async (userId: string) => {
   const myWallet = await Wallet.findOne({ user: userId }).populate(
     "user",
     "name"
+  );
+
+  if (!myWallet) {
+    throw new AppError(404, "Wallet not found for this user.");
+  }
+
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] My Wallet retrieved successfully! Balance: ${myWallet.balance}, Time: ${timestamp}`
   );
 
   return { myWallet };
