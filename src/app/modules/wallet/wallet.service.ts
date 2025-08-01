@@ -26,7 +26,7 @@ const updateWalletIsBlockStatus = async (
       "Wallet not found for Block update!"
     );
   }
-  console.log("isBlocked", isBlocked, "wallet.isBlocked", wallet.isBlocked);
+
   if (wallet.isBlocked === isBlocked) {
     throw new AppError(httpStatus.CONFLICT, `Wallet is already ${isBlocked}!`);
   }
@@ -38,6 +38,11 @@ const updateWalletIsBlockStatus = async (
   wallet.isBlocked = isBlocked;
   const updatedWallet = await wallet.save();
 
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] Wallet Block Status: ${wallet.isBlocked} Time: ${timestamp}`
+  );
+
   return updatedWallet;
 };
 
@@ -45,6 +50,11 @@ const getAllWallet = async (query: Record<string, string>) => {
   const queryBuilder = new QueryBuilder(Wallet.find(), query);
 
   const allWalletData = queryBuilder.filter().sort().fields().paginate();
+
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] All Wallet retrieved successfully at Time: ${timestamp}`
+  );
 
   const [data, meta] = await Promise.all([
     allWalletData.build(),

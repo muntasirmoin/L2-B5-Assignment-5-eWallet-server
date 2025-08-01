@@ -111,6 +111,9 @@ const cashIn = async (senderId: string, receiverId: string, amount: number) => {
       { session }
     );
 
+    const timestamp = new Date().toLocaleString();
+    console.log(`[Notification]Cash In successfully! at Time: ${timestamp}`);
+
     await session.commitTransaction();
     session.endSession();
     return { myAgentWallet: senderWallet, transaction };
@@ -237,6 +240,9 @@ const cashOut = async (
       { session }
     );
 
+    const timestamp = new Date().toLocaleString();
+    console.log(`[Notification]Cash Out successfully! at Time: ${timestamp}`);
+
     await session.commitTransaction();
     session.endSession();
     return { myAgentWallet: agentWallet, transaction };
@@ -258,6 +264,12 @@ const getAllAgents = async (role: string, query: Record<string, string>) => {
     allAgentData.build(),
     queryBuilder.getMeta(),
   ]);
+
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] All agents retrieved successfully! at Time: ${timestamp}`
+  );
+
   return {
     data,
     meta,

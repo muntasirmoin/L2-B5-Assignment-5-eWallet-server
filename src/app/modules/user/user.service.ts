@@ -51,6 +51,11 @@ const createUser = async (payload: Partial<IUser>) => {
       );
     }
 
+    const timestamp = new Date().toLocaleString();
+    console.log(
+      `[Notification] Account Created Successfully! at Time: ${timestamp}`
+    );
+
     await session.commitTransaction();
     session.endSession();
 
@@ -65,6 +70,10 @@ const createUser = async (payload: Partial<IUser>) => {
 
 const getMe = async (userId: string) => {
   const user = await User.findById(userId).select("-pin");
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] Your profile Retrieved Successfully! at Time: ${timestamp}`
+  );
   return {
     data: user,
   };
@@ -101,6 +110,10 @@ export const changeAgentApprovalStatus = async (
   // Update approval status
   // user.isAgentApproved = isAgentApproved;
   // const updatedAgent = await user.save();
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] Agent Approval Updated Successfully! at Time: ${timestamp}`
+  );
 
   return updatedAgent;
 };
@@ -116,6 +129,11 @@ const getAllUsers = async (role: string, query: Record<string, string>) => {
     allUserData.build(),
     queryBuilder.getMeta(),
   ]);
+
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification] All users retrieved successfully! at Time: ${timestamp}`
+  );
   return {
     data,
     meta,
@@ -199,6 +217,11 @@ const updateUser = async (
     runValidators: true,
   }).select("-pin");
 
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification]Profile Update By Admin Using User Id Successfully! at Time: ${timestamp}`
+  );
+
   return updatedUser;
 };
 
@@ -249,6 +272,11 @@ const updateProfile = async (userId: string, payload: Partial<IUser>) => {
     new: true,
     runValidators: true,
   }).select("-pin");
+
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification]Profile Updated Successfully! at Time: ${timestamp}`
+  );
 
   return updatedUser;
 };

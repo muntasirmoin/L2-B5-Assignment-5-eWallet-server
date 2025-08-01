@@ -82,7 +82,7 @@ const getMyCommission = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "My Wallet Commission history successfully",
+    message: "My Wallet Commission history retrieved successfully",
     data: result,
   });
 });

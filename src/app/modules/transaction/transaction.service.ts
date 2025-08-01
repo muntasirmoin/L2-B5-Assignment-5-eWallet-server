@@ -241,6 +241,11 @@ const getMyCommission = async (userId: string) => {
       0
     );
 
+    const timestamp = new Date().toLocaleString();
+    console.log(
+      `[Notification]My Wallet Commission history retrieved successfully! at Time: ${timestamp}`
+    );
+
     return {
       totalCommission: Number(totalCommission.toFixed(2)),
       myCommissionTransactions: validCommissions,
@@ -248,7 +253,7 @@ const getMyCommission = async (userId: string) => {
   } else {
     throw new AppError(
       400,
-      "You only get commission from cash-out type transactions."
+      "No commission added! You only get commission from cash-out type transactions."
     );
   }
 };
