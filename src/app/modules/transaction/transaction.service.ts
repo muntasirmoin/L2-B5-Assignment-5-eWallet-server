@@ -215,6 +215,14 @@ const reverseTransaction = async (originalTxId: string, adminId: string) => {
 
 const singleTransaction = async (transactionId: string) => {
   const singleTransaction = await Transaction.findById(transactionId);
+  if (!singleTransaction) {
+    throw new AppError(httpStatus.NOT_FOUND, "Transaction not found");
+  }
+
+  const timestamp = new Date().toLocaleString();
+  console.log(
+    `[Notification]Single Transaction  retrieved Successfully! Time: ${timestamp}`
+  );
 
   return singleTransaction;
 };

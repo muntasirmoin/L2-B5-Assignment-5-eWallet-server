@@ -44,12 +44,18 @@ const cashIn = async (senderId: string, receiverId: string, amount: number) => {
     );
   }
 
+  if (senderExists.isDeleted) {
+    throw new AppError(404, "Your Agent account is deleted.");
+  }
+
   const receiverExists = await User.findOne({ _id: receiverId });
 
   if (!receiverExists) {
     throw new AppError(404, "User account does not exist.");
   }
-
+  if (receiverExists.isDeleted) {
+    throw new AppError(404, "User account is deleted.");
+  }
   if (receiverExists.role !== Role.USER) {
     throw new AppError(400, "Receiver must be a  User Role ObjectId.");
   }
@@ -133,11 +139,11 @@ const cashOut = async (
   amount: number
 ) => {
   if (senderId === receiverId) {
-    throw new AppError(400, "Same sender & Agent.");
+    throw new AppError(400, "Same User & Agent.");
   }
 
   if (!senderId) {
-    throw new AppError(401, "Agent ID is missing.");
+    throw new AppError(401, "Your Agent ID is missing.");
   }
   if (!receiverId) {
     throw new AppError(401, " User ID is missing.");
@@ -149,7 +155,11 @@ const cashOut = async (
   const senderExists = await User.findById(senderId);
 
   if (!senderExists) {
-    throw new AppError(404, "Agent account does not exist.");
+    throw new AppError(404, "Your Agent account does not exist.");
+  }
+
+  if (senderExists.isDeleted) {
+    throw new AppError(404, "Your Agent account is deleted.");
   }
 
   if (!senderExists.isAgentApproved) {
@@ -162,11 +172,13 @@ const cashOut = async (
   const userExists = await User.findOne({ _id: receiverId });
 
   if (!userExists) {
-    throw new AppError(404, "Receiver account does not exist.");
+    throw new AppError(404, "User account does not exist.");
   }
-
+  if (userExists.isDeleted) {
+    throw new AppError(404, "User account is deleted.");
+  }
   if (userExists.role !== Role.USER) {
-    throw new AppError(400, "Receiver must be a  User Role ObjectId.");
+    throw new AppError(400, "User must be a  User Role ObjectId.");
   }
 
   const session = await Wallet.startSession();

@@ -80,14 +80,14 @@ Use the following base URL for making requests to the production API:
 
 ## 🚀 Transaction API Routes
 
-| **Sl. No.** | **Method** | **Endpoint**                 | **Access**  | **Description**                                                                                                         |
-| ----------- | ---------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
-| 1           | GET        | /transaction/my-transactions | User, Agent | Retrieve a paginated list of the user's or agent's transactions (based on the token)                                    |
-| 2           | GET        | /transaction                 | Admin Only  | Retrieve all transactions in the system!                                                                                |
-| 3           | POST       | /transaction/:id             | Admin Only  | Reverse a specific transaction by its ID. Only admins can perform this action                                           |
-| 4           | GET        | /transaction/:id             | Admin Only  | Retrieve a single transaction by ID                                                                                     |
-| 5           | GET        | /transaction/my-commission   | Agent       | Retrieve total commission and transactions (based on the token)                                                         |
-| 6           | POST       | /transaction/complete/:id    | User        | Marks a transaction (by its ID) as complete. Only allowed for transaction types: Add-money, Withdraw-money, Send-money! |
+| **Sl. No.** | **Method** | **Endpoint**                 | **Access**  | **Description**                                                                                                                                        |
+| ----------- | ---------- | ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1           | GET        | /transaction/my-transactions | User, Agent | Retrieve a paginated list of the user's or agent's transactions (based on the token)                                                                   |
+| 2           | GET        | /transaction                 | Admin Only  | Retrieve all transactions in the system! (based on the token)                                                                                          |
+| 3           | POST       | /transaction/:id             | Admin Only  | Reverse a specific transaction by its ID. Only admins can perform this action (based on the token)                                                     |
+| 4           | GET        | /transaction/:id             | Admin Only  | Retrieve a single transaction by (based on the token)ID                                                                                                |
+| 5           | GET        | /transaction/my-commission   | Agent       | Retrieve total commission and transactions!Agent get commission only from cash-out (based on the token)                                                |
+| 6           | POST       | /transaction/complete/:id    | User        | Marks a transaction (by its ID) as complete if pending. Only allowed for transaction types: Add-money, Withdraw-money, Send-money!(based on the token) |
 
 ## 💳 Digital Wallet API – eWallet – Action Mapping
 
