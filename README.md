@@ -100,6 +100,43 @@ Use the following base URL for making requests to the production API:
 | Cash-Out (Agent)    | `cash-out`                | User              | Agent           | cash                | Agent      | Agent gives physical cash, deducts from user's wallet balance.        |
 | Reverse Txn (Admin) | `reversed`                | Original Receiver | Original Sender | None                | Admin      | Admin reverses a transaction (e.g., fraud or error case).             |
 
+### 👤 User Features
+
+Users can manage their own wallets and perform money transactions easily:
+
+- **Add Money** – `/wallet/add-money`
+- **Withdraw Money** – `/wallet/withdraw`
+- **Send Money** – `/wallet/send-money`
+- **View Wallet Balance** – `/wallet/my-wallet`
+- **Transaction History** – `/transaction/my-transactions`
+- **Self Profile Management** – `/user/me`, `/user/profile-update`
+- **Change PIN Securely** – `/auth/change-pin`
+- **Complete Transactions** – `/transaction/complete/:id`
+
+### 🧑‍💼 Agent Features
+
+Agents wallet operations:
+
+- **Cash-In to User Wallets** – `/agent/cash-in`
+- **Cash-Out from User Wallets** – `/agent/cash-out`
+- **View Transaction History** – `/transaction/my-transactions`
+- **View Earned Commission from cash-out** – `/transaction/my-commission`
+- **Change PIN** – `/auth/change-pin`
+
+### 🛡 Admin Features
+
+Admins manage the entire e-Wallet system with full control:
+
+- **View All Users** – `/user/get-all-user`
+- **Block/Unblock Wallets** – `/wallet/block/:id`
+- **Approve or Suspend Agents** – `/user/approval-agent/:id`
+- **Update Any User/Agent** – `/user/:id`
+- **View All Agents** – `/agent/get-all-agent`
+- **View All Wallets** – `/wallet`
+- **View All Transactions** – `/transaction`
+- **Reverse Transactions** – `/transaction/:id`
+- **View Single Transaction by ID** – `/transaction/:id`
+
 ## 🔑 Key Features
 
 - **🛡️ User Authentication & Authorization**  
