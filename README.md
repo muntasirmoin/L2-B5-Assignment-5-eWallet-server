@@ -57,15 +57,15 @@ Use the following base URL for making requests to the production API:
 | 3           | PATCH      | /user/approval-agent/:id | Admin Only                     | Approve or suspend an agent by ID !Must contain the fields "isAgentApproved" (based on the token)                                                 |
 | 4           | GET        | /user/get-all-user       | Admin Only                     | Retrieve all user role accounts (based on the token)                                                                                              |
 | 5           | PATCH      | /user/profile-update     | All Roles (user, agent, admin) | Update the currently authenticated user's profile (self-update only). Only allows updating name, email, address, and picture.(based on the token) |
-| 6           | PATCH      | /user/:id                | Admin Only                     | Update a user/agent by ID allowedFields: "name", "email", "address", "picture", "role", "isBlocked", "isAgentApproved".(based on the token)       |
+| 6           | PATCH      | /user/:id                | Admin Only                     | Update a user/agent by ID Allowed Fields: "name", "email", "address", "picture", "role", "isBlocked", "isAgentApproved".(based on the token)      |
 
 ## 🚀 Agent API Routes
 
-| **Sl. No.** | **Method** | **Endpoint**         | **Access** | **Description**                                       |
-| ----------- | ---------- | -------------------- | ---------- | ----------------------------------------------------- |
-| 1           | GET        | /agent/get-all-agent | Admin Only | Retrieve all agent role accounts                      |
-| 2           | POST       | /agent/cash-in       | Agent Only | Agent can add money to a user's wallet (Cash-In)      |
-| 3           | POST       | /agent/cash-out      | Agent Only | Agent withdraws (cash-out) money from a user's wallet |
+| **Sl. No.** | **Method** | **Endpoint**         | **Access** | **Description**                                                                                             |
+| ----------- | ---------- | -------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| 1           | GET        | /agent/get-all-agent | Admin Only | Retrieve all agent role accounts. (based on the token)                                                      |
+| 2           | POST       | /agent/cash-in       | Agent Only | Agent can add money to a user's wallet (Cash-In).Allowed Fields:"userId","amount".(based on the token)      |
+| 3           | POST       | /agent/cash-out      | Agent Only | Agent withdraws (cash-out) money from a user's wallet.Allowed Fields:"userId","amount".(based on the token) |
 
 ## 🚀 Wallet API Routes
 
