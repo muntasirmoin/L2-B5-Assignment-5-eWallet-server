@@ -1,0 +1,1417 @@
+{
+	"info": {
+		"_postman_id": "c2f5695f-95b1-4cb6-bc75-530e80bf2c14",
+		"name": "Backend eWallet With Vercel deploy link",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34938752"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "Get-My-Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/me",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-All-User By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTE3NjQ2LCJleHAiOjE3NTQyMDQwNDZ9.RybrZvOogvrPOrP3EaUpxsoGAhmQpQRVDgeIDlIEyEw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/get-all-user",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get-all-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-All-Agent By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MDY2ODgyLCJleHAiOjE3NTQxNTMyODJ9.fdlUzfctnKc8wJpU7_3DAT8IK4piSlNoLzM0wpNcgT4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/agent/get-all-agent",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agent",
+								"get-all-agent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create-New-Profile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"name\": \"Abdul\",\r\n    \"phone\": \"01768968989\", \r\n    \"pin\": \"12345\",\r\n    \"email\": \"abdul@gmail.com\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/register",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agent-Approved-Suspend By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"isAgentApproved\": true\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/approval-agent/688deebebd57ed0b8b5ec32e",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"approval-agent",
+								"688deebebd57ed0b8b5ec32e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTE3NjQ2LCJleHAiOjE3NTQyMDQwNDZ9.RybrZvOogvrPOrP3EaUpxsoGAhmQpQRVDgeIDlIEyEw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \r\n   \r\n    \"name\":\"Muntasir chowdhury\",\r\n    \"email\":\"muntasir@gmail.com\",\r\n    \"address\":\"Sylhet\",\r\n    \"role\":\"agent\",\r\n    \"isBlocked\":false\r\n    ,\r\n    \"isAgentApproved\":false\r\n  \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/688deebebd57ed0b8b5ec32e",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"688deebebd57ed0b8b5ec32e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update-My-Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWViZWJkNTdlZDBiOGI1ZWMzMmUiLCJwaG9uZSI6IjAxNzY4OTY4OTM0Iiwicm9sZSI6ImFnZW50IiwiaWF0IjoxNzU0MTM5ODgzLCJleHAiOjE3NTQyMjYyODN9.BaWMtfeDYx1KoZqRdoY762tSD1tb6mYuOAbG-GuUGvg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n           \"name\":\"Chowdhury\",\r\n          \"email\":\"chowdhury@gmaail.com\",\r\n          \"address\":\"Sylhet\"\r\n        //   \"picture\":\"\"\r\n          \r\n        \r\n\r\n            \r\n        \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/profile-update",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile-update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n \"phone\": \"01768968980\", \r\n    \"pin\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logOut",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/auth/logout",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-pin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n    \r\n    \"newPin\" : \"12345\",\r\n    \r\n    \"oldPin\" : \"12356\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/auth/change-pin",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"change-pin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh-token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmM5NzlhNzViN2U3NGM1MzA5MzYiLCJwaG9uZSI6IjAxNzY4OTY4OTMxIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxMTQ4NDcsImV4cCI6MTc1NDIwMTI0N30.cXRniwJkU0FECWAVIZddXEHb9knIUMDuHMnYzN4Gu6E",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmM5NzlhNzViN2U3NGM1MzA5MzYiLCJwaG9uZSI6IjAxNzY4OTY4OTMxIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxMTY0MTYsImV4cCI6MTc1NjcwODQxNn0.2NKg2i5mpErdNQEJvJ6Ieww9GaHJE8h6IlrxdQoBSUw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/auth/refresh-token",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create-New-Profile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"name\": \"Abdul\",\r\n    \"phone\": \"01768968978\", \r\n    \"pin\": \"12345\",\r\n    \"email\": \"abdul@gmail.com\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/register",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WALLET",
+			"item": [
+				{
+					"name": "Get-All-Wallet By Admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTE3NjQ2LCJleHAiOjE3NTQyMDQwNDZ9.RybrZvOogvrPOrP3EaUpxsoGAhmQpQRVDgeIDlIEyEw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block-Unblock-Wallet By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isBlocked\": \"unblocked\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet/block/688e1c40a17967dc78baa83a",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet",
+								"block",
+								"688e1c40a17967dc78baa83a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-My-Wallet By user/agent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet/my-wallet",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet",
+								"my-wallet"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Wallet",
+			"item": [
+				{
+					"name": "add-money user Wallet By User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 300,\r\n    \"source\": \"bank\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet/add-money",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet",
+								"add-money"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdraw-money user Wallet By User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 300,\r\n    \"source\": \"bank\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet/withdraw",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send-money user Wallet By User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 300,\r\n    \"receiverUserId\":\"688dee14bd57ed0b8b5ec31f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet/send-money",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet",
+								"send-money"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pending-To-Complete Transaction By User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/complete/688e1e74a17967dc78baa85d",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"complete",
+								"688e1e74a17967dc78baa85d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agent Wallet",
+			"item": [
+				{
+					"name": "Get-My-Commission-History By Agent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWVkNGJkNTdlZDBiOGI1ZWMzMzMiLCJwaG9uZSI6IjAxNzY4OTY4OTM4Iiwicm9sZSI6ImFnZW50IiwiaWF0IjoxNzU0MTMzOTQwLCJleHAiOjE3NTQyMjAzNDB9.heprjx6XJ3zl7V0ztK06HX-xay-SofGLv8YL1GKhaEc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/my-commission",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"my-commission"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-My-transaction-History By user/agent",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWViZWJkNTdlZDBiOGI1ZWMzMmUiLCJwaG9uZSI6IjAxNzY4OTY4OTM0Iiwicm9sZSI6ImFnZW50IiwiaWF0IjoxNzU0MTM5ODgzLCJleHAiOjE3NTQyMjYyODN9.BaWMtfeDYx1KoZqRdoY762tSD1tb6mYuOAbG-GuUGvg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/my-transactions",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"my-transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-All-Agent By Admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/agent/get-all-agent",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agent",
+								"get-all-agent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cash-In By Agent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWVkNGJkNTdlZDBiOGI1ZWMzMzMiLCJwaG9uZSI6IjAxNzY4OTY4OTM4Iiwicm9sZSI6ImFnZW50IiwiaWF0IjoxNzU0MTMzOTQwLCJleHAiOjE3NTQyMjAzNDB9.heprjx6XJ3zl7V0ztK06HX-xay-SofGLv8YL1GKhaEc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"688dee14bd57ed0b8b5ec31f\"\r\n    ,\r\n    \"amount\":300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/agent/cash-in",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agent",
+								"cash-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cash-Out By Agent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWViZWJkNTdlZDBiOGI1ZWMzMmUiLCJwaG9uZSI6IjAxNzY4OTY4OTM0Iiwicm9sZSI6ImFnZW50IiwiaWF0IjoxNzU0MTM5ODgzLCJleHAiOjE3NTQyMjYyODN9.BaWMtfeDYx1KoZqRdoY762tSD1tb6mYuOAbG-GuUGvg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"688dee14bd57ed0b8b5ec31f\",\r\n    \"amount\":50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/agent/cash-out",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agent",
+								"cash-out"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve-Suspend-Agent By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTMzNjExLCJleHAiOjE3NTQyMjAwMTF9.OZ-XOtZ4CDatMR4OxyZYDMqA82CEkuUHE7XbFqVdc9E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isAgentApproved\":true\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/approval-agent/688deed4bd57ed0b8b5ec333",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"approval-agent",
+								"688deed4bd57ed0b8b5ec333"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "My-Transaction-History By User/Agent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMTBiMGU1NzdiN2QyNTZiNDllMzEiLCJwaG9uZSI6IjAxNzY4OTY4OTgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTQxNDA4NTksImV4cCI6MTc1NDIyNzI1OX0.bABxz9MY6B3Q9yGOBwiMAIcSVPcbMoOK-x3q-cVaok0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/my-transactions",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"my-transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-All-Transaction By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTE3NjQ2LCJleHAiOjE3NTQyMDQwNDZ9.RybrZvOogvrPOrP3EaUpxsoGAhmQpQRVDgeIDlIEyEw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "11",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Single-Transaction By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTE3NjQ2LCJleHAiOjE3NTQyMDQwNDZ9.RybrZvOogvrPOrP3EaUpxsoGAhmQpQRVDgeIDlIEyEw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/688e11bfe577b7d256b49e4f",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"688e11bfe577b7d256b49e4f"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "11",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reversed-Transaction By Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTE3NjQ2LCJleHAiOjE3NTQyMDQwNDZ9.RybrZvOogvrPOrP3EaUpxsoGAhmQpQRVDgeIDlIEyEw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/reverse/688e1211e577b7d256b49e66",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"reverse",
+								"688e1211e577b7d256b49e66"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Access Request",
+			"item": [
+				{
+					"name": "Get-All-User By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/get-all-user",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get-all-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-All-Agent By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/agent/get-all-agent",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agent",
+								"get-all-agent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-All-Wallet By Admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhMmNkZDlhNzViN2U3NGM1MzA5NDIiLCJwaG9uZSI6IjAxNzY4OTY4OTMzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MDQxMTM4LCJleHAiOjE3NTQxMjc1Mzh9.vxN9tN9pCDEQBFswosvtqrLx1SfOm9V0YNfwFV2SwcM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-All-Transaction By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "11",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Single-Transaction By Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/688e20c1a17967dc78baa87e",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"688e20c1a17967dc78baa87e"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "11",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reversed-Transaction By Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/transaction/reverse/688e1e74a17967dc78baa85d",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"reverse",
+								"688e1e74a17967dc78baa85d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block-Unblock-Wallet By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isBlocked\": \"blocked\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/wallet/block/688e1c40a17967dc78baa83a",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet",
+								"block",
+								"688e1c40a17967dc78baa83a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve-Suspend-Agent By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkZWQyYWJkNTdlZDBiOGI1ZWMzMTEiLCJwaG9uZSI6IjAxNzY4OTY4OTMwIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU0MTM5ODMwLCJleHAiOjE3NTQyMjYyMzB9.Gktf9zgwGayiygZAzaVsWk1o00fdi_FgHY-qR8a2bCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"isAgentApproved\":true\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://e-wallet-server-olive.vercel.app/api/v1/user/approval-agent/688deebebd57ed0b8b5ec32e",
+							"protocol": "https",
+							"host": [
+								"e-wallet-server-olive",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"approval-agent",
+								"688deebebd57ed0b8b5ec32e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
