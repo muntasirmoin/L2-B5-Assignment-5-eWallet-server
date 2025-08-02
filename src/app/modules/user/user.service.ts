@@ -70,6 +70,9 @@ const createUser = async (payload: Partial<IUser>) => {
 
 const getMe = async (userId: string) => {
   const user = await User.findById(userId).select("-pin");
+  if (!user) {
+    throw new AppError(404, "Not found!Your Profile!");
+  }
   const timestamp = new Date().toLocaleString();
   console.log(
     `[Notification] Your profile Retrieved Successfully! at Time: ${timestamp}`
