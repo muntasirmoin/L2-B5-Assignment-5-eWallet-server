@@ -175,6 +175,22 @@ src/
 
 ```
 
+## 🧰 Tech Stack
+
+- 🔲 **Node.js**
+- 🛠 **TypeScript**
+- 🚀 **Express**
+- 🗄 **MongoDB**
+- 🧰 **Mongoose**
+- 🛡 **Passport.js**
+- 🪪 **JWT (JSON Web Token)**
+- 🔐 **BcryptJS**
+- 🌍 **CORS**
+- 📦 **dotenv**
+- ✅ **Zod**
+- 🧹 **ESLint**
+- 🔒 **express-rate-limit**
+
 ### 📦 Installation Steps
 
 1. **Clone the Repository**
