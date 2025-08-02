@@ -17,7 +17,13 @@ app.use(passport.initialize());
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 // routes -> index.ts
 app.use("/api/v1", router);

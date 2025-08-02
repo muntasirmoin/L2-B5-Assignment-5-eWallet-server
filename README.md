@@ -41,12 +41,12 @@ Use the following base URL for making requests to the production API:
 
 ## 🚀 Auth API Routes
 
-| **Sl. No.** | **Method** | **Endpoint**        | **Access**                      | **Description**                                                |
-| ----------- | ---------- | ------------------- | ------------------------------- | -------------------------------------------------------------- |
-| 1           | POST       | /auth/login         | Public                          | Authenticates a user and returns JWT tokens.                   |
-| 2           | POST       | /auth/logout        | Private                         | Logs out the user and invalidates the session/token.           |
-| 3           | POST       | /auth/change-pin    | Authenticated Users (All Roles) | Allows users, agents, and admins to change their PIN securely. |
-| 4           | POST       | /auth/refresh-token | Public (with refresh token)     | Issues a new access token using a valid refresh token.         |
+| **Sl. No.** | **Method** | **Endpoint**        | **Access**                      | **Description**                                                                                                         |
+| ----------- | ---------- | ------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 1           | POST       | /auth/login         | Public                          | Authenticates a user and returns JWT tokens.("phone","pin" )                                                            |
+| 2           | POST       | /auth/logout        | Private                         | Logs out the user and invalidates the session/token.                                                                    |
+| 3           | POST       | /auth/change-pin    | Authenticated Users (All Roles) | Allows users, agents, and admins to change their PIN securely( "oldPin", "newPin").(based on the token)                 |
+| 4           | POST       | /auth/refresh-token | Public (with refresh token)     | Issues a new access token using a valid refresh token.(Key: Cookie,Value: refreshToken=<paste_your_refresh_token_here>) |
 
 ## 🚀 USER API Routes
 
