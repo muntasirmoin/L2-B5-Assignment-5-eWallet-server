@@ -50,14 +50,14 @@ Use the following base URL for making requests to the production API:
 
 ## 🚀 USER API Routes
 
-| **Sl. No.** | **Method** | **Endpoint**             | **Access**                     | **Description**                                                                                                               |
-| ----------- | ---------- | ------------------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| 1           | POST       | /user/register           | Public                         | Register New User                                                                                                             |
-| 2           | GET        | /user/me                 | All Roles (user, agent, admin) | Get the current user's profile (based on the token)                                                                           |
-| 3           | PATCH      | /user/approval-agent/:id | Admin Only                     | Approve or suspend an agent by ID                                                                                             |
-| 4           | GET        | /user/get-all-user       | Admin Only                     | Retrieve all user role accounts                                                                                               |
-| 5           | PATCH      | /user/profile-update     | All Roles (user, agent, admin) | Update the currently authenticated user's profile (self-update only). Only allows updating name, email, address, and picture. |
-| 6           | PATCH      | /user/:id                | Admin Only                     | Update a user/agent by ID                                                                                                     |
+| **Sl. No.** | **Method** | **Endpoint**             | **Access**                     | **Description**                                                                                                                                   |
+| ----------- | ---------- | ------------------------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1           | POST       | /user/register           | Public                         | Register New User must contain the fields "name", "phone", "pin"                                                                                  |
+| 2           | GET        | /user/me                 | All Roles (user, agent, admin) | Get the current user's profile (based on the token)                                                                                               |
+| 3           | PATCH      | /user/approval-agent/:id | Admin Only                     | Approve or suspend an agent by ID !Must contain the fields "isAgentApproved" (based on the token)                                                 |
+| 4           | GET        | /user/get-all-user       | Admin Only                     | Retrieve all user role accounts (based on the token)                                                                                              |
+| 5           | PATCH      | /user/profile-update     | All Roles (user, agent, admin) | Update the currently authenticated user's profile (self-update only). Only allows updating name, email, address, and picture.(based on the token) |
+| 6           | PATCH      | /user/:id                | Admin Only                     | Update a user/agent by ID allowedFields: "name", "email", "address", "picture", "role", "isBlocked", "isAgentApproved"                            |
 
 ## 🚀 Agent API Routes
 
