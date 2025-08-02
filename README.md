@@ -69,14 +69,14 @@ Use the following base URL for making requests to the production API:
 
 ## 🚀 Wallet API Routes
 
-| **Sl. No.** | **Method** | **Endpoint**       | **Access**  | **Description**                                     |
-| ----------- | ---------- | ------------------ | ----------- | --------------------------------------------------- |
-| 1           | GET        | /wallet            | Admin Only  | Retrieve all user and agent wallets                 |
-| 2           | GET        | /wallet/my-wallet  | User, Agent | Retrieve user or agent wallets (based on the token) |
-| 3           | POST       | /wallet/add-money  | User Only   | Allows a user to add money to their own wallet      |
-| 4           | POST       | /wallet/send-money | User Only   | Allows a user to send money to another user         |
-| 5           | POST       | /wallet/withdraw   | User Only   | Allows a user to withdraw money from their wallet   |
-| 6           | PATCH      | /wallet/block/:id  | Admin Only  | Block or unblock a wallet by wallet ID              |
+| **Sl. No.** | **Method** | **Endpoint**       | **Access**  | **Description**                                                                                           |
+| ----------- | ---------- | ------------------ | ----------- | --------------------------------------------------------------------------------------------------------- |
+| 1           | GET        | /wallet            | Admin Only  | Retrieve all user and agent wallets (based on the token)                                                  |
+| 2           | GET        | /wallet/my-wallet  | User, Agent | Retrieve user or agent wallets (based on the token)                                                       |
+| 3           | POST       | /wallet/add-money  | User Only   | Allows a user to add money to their own wallet.Allowed Fields:"amount","source". (based on the token)     |
+| 4           | POST       | /wallet/send-money | User Only   | Allows a user to send money to another user.Allowed Fields:"amount","receiverUserId".(based on the token) |
+| 5           | POST       | /wallet/withdraw   | User Only   | Allows a user to withdraw money from their wallet.Allowed Fields:"amount","source". (based on the token)  |
+| 6           | PATCH      | /wallet/block/:id  | Admin Only  | Block or unblock a wallet by wallet ID. Allowed Field:"isBlocked".(based on the token)                    |
 
 ## 🚀 Transaction API Routes
 

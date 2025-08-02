@@ -163,16 +163,30 @@ const sendMoney = async (
     throw new AppError(400, "Amount must be a positive number.");
   }
 
-  const senderExists = await User.exists({ _id: senderId });
+  const senderExists = await User.findOne({ _id: senderId });
 
   if (!senderExists) {
     throw new AppError(404, "Sender account does not exist.");
+  }
+
+  if (senderExists.isBlocked) {
+    throw new AppError(404, "sender account is blocked.");
+  }
+  if (senderExists.isDeleted) {
+    throw new AppError(404, "sender account is deleted.");
   }
 
   const receiverExists = await User.findOne({ _id: receiverId });
 
   if (!receiverExists) {
     throw new AppError(404, "Receiver account does not exist.");
+  }
+
+  if (receiverExists.isBlocked) {
+    throw new AppError(404, "Receiver account is blocked.");
+  }
+  if (receiverExists.isDeleted) {
+    throw new AppError(404, "Receiver account is deleted.");
   }
 
   if (receiverExists.role !== Role.USER) {
