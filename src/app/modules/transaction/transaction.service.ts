@@ -26,18 +26,50 @@ const getMyTransactions = async (
     );
   }
 
+  // const queryTransaction: Record<string, unknown> = {
+  //   $or: [{ sender: userId }, { receiver: userId }, { createdBy: userId }],
+  // };
+
   const queryTransaction: Record<string, unknown> = {
-    $or: [{ sender: userId }, { receiver: userId }, { createdBy: userId }],
+    $and: [
+      {
+        $or: [{ sender: userId }, { receiver: userId }, { createdBy: userId }],
+      },
+      {
+        type: { $ne: "reversal" }, // ✅ exclude reversal transactions
+      },
+    ],
   };
 
   const queryBuilder = new QueryBuilder(
     Transaction.find(queryTransaction).populate(
       "createdBy sender receiver",
-      "name role"
+      "name role phone"
     ),
     query
   );
-  const myTransactionData = queryBuilder.filter().sort().fields().paginate();
+  const searchableFields = [
+    "_id",
+    "amount",
+    "status",
+    "type",
+    "createdBy.name",
+    "sender.name",
+    "receiver.name",
+    "createdBy._id",
+    "sender._id",
+    "receiver._id",
+  ];
+  // const myTransactionData = queryBuilder.filter().sort().fields().paginate();
+  const myTransactionData = queryBuilder
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .fields();
+
+  if (query.limit !== "all") {
+    myTransactionData.paginate();
+  }
 
   const [data, meta] = await Promise.all([
     myTransactionData.build(),

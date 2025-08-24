@@ -13,6 +13,7 @@ interface EnvInterface {
   JWT_REFRESH_EXPIRES: string;
   ADMIN_PHONE: string;
   ADMIN_PIN: string;
+  FRONTEND_URL: string;
 }
 
 const loadEnvVariables = (): EnvInterface => {
@@ -27,6 +28,7 @@ const loadEnvVariables = (): EnvInterface => {
     "ADMIN_PIN",
     "JWT_REFRESH_SECRET",
     "JWT_REFRESH_EXPIRES",
+    "FRONTEND_URL",
   ];
 
   requiredEnvironmentVariables.forEach((key) => {
@@ -48,6 +50,7 @@ const loadEnvVariables = (): EnvInterface => {
     JWT_REFRESH_EXPIRES: process.env.JWT_REFRESH_EXPIRES as string,
     ADMIN_PHONE: process.env.ADMIN_PHONE as string,
     ADMIN_PIN: process.env.ADMIN_PIN as string,
+    FRONTEND_URL: process.env.FRONTEND_URL as string,
   };
 };
 

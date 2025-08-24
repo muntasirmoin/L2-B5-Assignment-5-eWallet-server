@@ -119,6 +119,48 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+//
+const getUserByNumber = catchAsync(async (req: Request, res: Response) => {
+  // const { phone } = req.body;
+  const phone = req.query.phone as string;
+
+  if (!phone) {
+    return sendResponse(res, {
+      success: false,
+      statusCode: httpStatus.BAD_REQUEST,
+      message: "Phone number is required",
+      data: null,
+    });
+  }
+
+  const user = await UserServices.getUserByNumber(phone);
+
+  if (!user) {
+    return sendResponse(res, {
+      success: false,
+      statusCode: httpStatus.NOT_FOUND,
+      message: "With This Phone Number user not found",
+      data: null,
+    });
+  }
+
+  // You can filter what to return (e.g., avoid returning sensitive info)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { pin, ...rest } = user.toObject();
+
+  return sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User retrieved successfully",
+    data: {
+      userId: user._id,
+      user: rest,
+    },
+  });
+});
+
+//
+
 export const UserControllers = {
   createUser,
   getMe,
@@ -126,4 +168,5 @@ export const UserControllers = {
   getAllUsers,
   updateUser,
   updateProfile,
+  getUserByNumber,
 };

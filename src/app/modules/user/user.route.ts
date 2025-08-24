@@ -27,6 +27,7 @@ router.patch(
 );
 
 router.get("/get-all-user", checkAuth(Role.ADMIN), UserControllers.getAllUsers);
+router.get("/get-user-by-number", UserControllers.getUserByNumber);
 
 router.patch(
   "/approval-agent/:id",

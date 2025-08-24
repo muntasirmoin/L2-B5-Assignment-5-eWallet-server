@@ -9,6 +9,7 @@ import notFound from "./app/middlewares/notFound";
 import passport from "passport";
 
 import "./app/config/passport";
+import { envVars } from "./app/config/env";
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use(express.json());
 // app.use(cors());
 app.use(
   cors({
-    origin: true,
+    // origin: true,
+    origin: envVars.FRONTEND_URL,
     credentials: true,
   })
 );

@@ -8,6 +8,7 @@ import { sendResponse } from "../../utils/sendResponse";
 import { createUserTokens } from "../../utils/userTokens";
 import { setAuthCookie } from "../../utils/setCookie";
 import { AuthServices } from "./auth.service";
+import { envVars } from "../../config/env";
 
 const credentialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -51,13 +52,17 @@ const credentialsLogin = catchAsync(
 const logout = catchAsync(async (req: Request, res: Response) => {
   res.clearCookie("accessToken", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    // secure: false,
+    // sameSite: "lax",
+    secure: envVars.NODE_ENV === "production",
+    sameSite: "none",
   });
   res.clearCookie("refreshToken", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    // secure: false,
+    // sameSite: "lax",
+    secure: envVars.NODE_ENV === "production",
+    sameSite: "none",
   });
 
   const timestamp = new Date().toLocaleString();

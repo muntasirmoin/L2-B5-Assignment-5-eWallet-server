@@ -122,12 +122,29 @@ export const changeAgentApprovalStatus = async (
 };
 
 const getAllUsers = async (role: string, query: Record<string, string>) => {
+  const booleanFields = ["isBlocked"];
+
   const queryBuilder = new QueryBuilder(
     User.find({ role }).select("-pin"),
-    query
+    query,
+    booleanFields
   );
+  const searchableFields = [
+    "name",
+    "phone",
+    "email",
+    "role",
+    "address",
+    "isBlocked",
+  ];
+  // const allUserData = queryBuilder.filter().sort().fields().paginate();
+  const allUserData = queryBuilder
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .fields()
+    .paginate();
 
-  const allUserData = queryBuilder.filter().sort().fields().paginate();
   const [data, meta] = await Promise.all([
     allUserData.build(),
     queryBuilder.getMeta(),
@@ -238,8 +255,8 @@ const updateProfile = async (userId: string, payload: Partial<IUser>) => {
   if (ifUserExist.isBlocked || ifUserExist.isDeleted) {
     throw new AppError(403, "User is not allowed to be updated");
   }
-
-  if ("pin" in payload || "phone" in payload) {
+  // muntasir
+  if ("pin" in payload) {
     throw new AppError(400, "Cannot update phone number or PIN here.");
   }
 
@@ -261,7 +278,7 @@ const updateProfile = async (userId: string, payload: Partial<IUser>) => {
     }
   }
 
-  const allowedFields = ["name", "email", "address", "picture"];
+  const allowedFields = ["name", "email", "address", "picture", "phone"];
 
   const sanitizedPayload = Object.fromEntries(
     Object.entries(payload).filter(([key]) => allowedFields.includes(key))
@@ -284,6 +301,14 @@ const updateProfile = async (userId: string, payload: Partial<IUser>) => {
   return updatedUser;
 };
 
+//
+
+const getUserByNumber = async (phone: string) => {
+  return await User.findOne({ phone });
+};
+
+//
+
 export const UserServices = {
   createUser,
   getMe,
@@ -291,4 +316,5 @@ export const UserServices = {
   getAllUsers,
   updateUser,
   updateProfile,
+  getUserByNumber,
 };
