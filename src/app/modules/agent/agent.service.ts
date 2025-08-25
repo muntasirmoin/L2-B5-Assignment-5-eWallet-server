@@ -266,12 +266,28 @@ const cashOut = async (
 };
 
 const getAllAgents = async (role: string, query: Record<string, string>) => {
+  const booleanFields = ["isAgentApproved", "isBlocked"];
   const queryBuilder = new QueryBuilder(
     User.find({ role }).select("-pin"),
-    query
+    query,
+    booleanFields
   );
+  const searchableFields = [
+    "name",
+    "phone",
+    "email",
+    "role",
+    "address",
+    "isBlocked",
+    "isAgentApproved",
+  ];
 
-  const allAgentData = queryBuilder.filter().sort().fields().paginate();
+  const allAgentData = queryBuilder
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .fields()
+    .paginate();
   const [data, meta] = await Promise.all([
     allAgentData.build(),
     queryBuilder.getMeta(),
