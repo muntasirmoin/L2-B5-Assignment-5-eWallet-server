@@ -94,9 +94,31 @@ const getMyTransactions = async (
 };
 
 const getAllTransactions = async (query: Record<string, string>) => {
-  const queryBuilder = new QueryBuilder(Transaction.find(), query);
+  // const queryBuilder = new QueryBuilder(Transaction.find(), query);
 
-  const allWalletData = queryBuilder.filter().sort().fields().paginate();
+  const queryBuilder = new QueryBuilder(
+    Transaction.find().populate("createdBy sender receiver", "name role phone"),
+    query
+  );
+  const searchableFields = [
+    "_id",
+    "amount",
+    "status",
+    "type",
+    "createdBy.name",
+    "sender.name",
+    "receiver.name",
+    "createdBy._id",
+    "sender._id",
+    "receiver._id",
+  ];
+
+  const allWalletData = queryBuilder
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .fields()
+    .paginate();
 
   const [data, meta] = await Promise.all([
     allWalletData.build(),
