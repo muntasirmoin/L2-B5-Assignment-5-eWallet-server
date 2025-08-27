@@ -13,6 +13,7 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
       // secure: false,
       secure: envVars.NODE_ENV === "production",
       sameSite: "none",
+      // maxAge: 30 * 24 * 60 * 60 * 1000,
     });
   }
 
@@ -22,6 +23,7 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
       // secure: false,
       secure: envVars.NODE_ENV === "production",
       sameSite: "none",
+      // maxAge: 30 * 24 * 60 * 60 * 1000,
     });
   }
 };
