@@ -144,6 +144,91 @@ const addMoney = async (userId: string, amount: number, source: string) => {
   }
 };
 
+// adddMoney as cash in
+
+const addMoneyAsCashIn = async (
+  userId: string,
+  amount: number,
+  source: string
+) => {
+  const session = await Wallet.startSession();
+  session.startTransaction();
+
+  try {
+    const userExists = await User.exists({ _id: userId });
+
+    if (!userExists) {
+      throw new AppError(404, "User account does not exist.");
+    }
+    if (!userId) {
+      throw new AppError(401, "Account does not exist");
+    }
+    if (
+      !Object.values(TransactionSourceEnum).includes(
+        source as TransactionSourceEnum
+      )
+    ) {
+      throw new AppError(
+        404,
+        `Source of add money does not exist. Please add source ["${Object.values(
+          TransactionSourceEnum
+        ).join('" or "')}"].`
+      );
+    }
+    if (!amount || typeof amount !== "number" || amount <= 0) {
+      throw new AppError(400, "Amount must be a positive number");
+    }
+
+    const wallet = await Wallet.findOne({ user: userId }).session(session);
+
+    if (!wallet) {
+      throw new AppError(404, "Wallet not found");
+    }
+
+    if (wallet.isBlocked === WalletStatus.BLOCKED) {
+      throw new AppError(403, "Wallet is blocked");
+    }
+
+    amount = Number(amount.toFixed(2));
+    // wallet.balance += amount;
+    // wallet.balance = Number(wallet.balance.toFixed(2));
+    // await wallet.save({ session });
+
+    const [transaction] = await Transaction.create(
+      [
+        {
+          type: TransactionTypeEnum.CashIn,
+          amount,
+          status: TransactionStatusEnum.Pending,
+          source,
+          receiver: userId,
+          createdBy: userId,
+        },
+      ],
+      { session }
+    );
+
+    const timestamp = new Date().toLocaleString();
+    console.log(
+      `[Notification] Add-money transaction ${transaction._id} created! Amount: ${amount}. Status: ${transaction.status}. Time: ${timestamp}`
+    );
+
+    const message = `Transaction created. Waiting for confirmation. Transaction Id :${transaction._id}`;
+
+    await session.commitTransaction();
+    session.endSession();
+    return { message, transaction };
+    // return { wallet, transaction };
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+
+    throw error;
+  }
+};
+
+//
+
 const sendMoney = async (
   senderId: string,
   receiverId: string,
@@ -379,7 +464,7 @@ export const WalletServices = {
   getAllWallet,
   addMoney,
   sendMoney,
-
+  addMoneyAsCashIn,
   withdraw,
   getMyWallet,
 };

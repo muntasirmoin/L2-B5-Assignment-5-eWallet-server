@@ -24,6 +24,16 @@ router.post(
   validateRequest(addMoneyZodSchema),
   WalletControllers.addMoney
 );
+
+// addMoneyAs cash-In
+router.post(
+  "/add-money-as-cash-in",
+  checkAuth(Role.USER),
+  validateRequest(addMoneyZodSchema),
+  WalletControllers.addMoneyAsCashIn
+);
+
+//
 router.post(
   "/send-money",
   checkAuth(Role.USER),

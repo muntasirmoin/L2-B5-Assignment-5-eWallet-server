@@ -57,6 +57,24 @@ const addMoney = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// addMoneyAsCashIn
+const addMoneyAsCashIn = catchAsync(async (req: Request, res: Response) => {
+  const decodeToken = req.user as JwtPayload;
+
+  const userId = decodeToken.userId;
+  const { amount, source } = req.body;
+
+  const wallet = await WalletServices.addMoneyAsCashIn(userId, amount, source);
+
+  res.status(200).json({
+    success: true,
+    message: wallet.message, //"Money added successfully",
+    data: wallet.transaction,
+  });
+});
+
+//
+
 const sendMoney = catchAsync(async (req: Request, res: Response) => {
   const decodeToken = req.user as JwtPayload;
 
@@ -108,7 +126,7 @@ export const WalletControllers = {
   getAllWallet,
   addMoney,
   sendMoney,
-
+  addMoneyAsCashIn,
   withdraw,
   getMyWallet,
 };

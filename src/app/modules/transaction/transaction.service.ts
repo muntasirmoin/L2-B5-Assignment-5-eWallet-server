@@ -383,16 +383,48 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
       TransactionTypeEnum.Add,
       TransactionTypeEnum.Withdraw,
       TransactionTypeEnum.Send,
+      TransactionTypeEnum.CashIn,
     ];
 
     if (!allowedTypes.includes(originalTx.type)) {
       throw new AppError(
         400,
-        "Only 'Add-money' or 'Withdraw-money' transactions can be completed here."
+        "Only 'Add-money' or 'Withdraw-money'or 'cash-in' or 'send-money' transactions can be completed here."
       );
     }
     // add-money
     if (originalTx.type === TransactionTypeEnum.Add) {
+      const userWallet = await Wallet.findOne({ user: userId }).session(
+        session
+      );
+
+      if (!userWallet) {
+        throw new AppError(404, "Wallet not found.");
+      }
+      if (userWallet.isBlocked === WalletStatus.BLOCKED) {
+        throw new AppError(403, "Your wallet is blocked.");
+      }
+
+      userWallet.balance += amount;
+      userWallet.balance = Number(userWallet.balance.toFixed(2));
+      await userWallet.save({ session });
+      originalTx.status = TransactionStatusEnum.Completed;
+      await originalTx.save({ session });
+
+      //
+      const timestamp = new Date().toLocaleString();
+      console.log(
+        `[Notification] Transaction Id[add-money]: ${originalTx._id} marked as Completed! Amount: ${amount}. Time: ${timestamp}`
+      );
+
+      await session.commitTransaction();
+      session.endSession();
+
+      return userWallet;
+    }
+
+    //  add money as cash in
+    if (originalTx.type === TransactionTypeEnum.CashIn) {
       const userWallet = await Wallet.findOne({ user: userId }).session(
         session
       );
