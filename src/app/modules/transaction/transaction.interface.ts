@@ -38,6 +38,8 @@ export interface ITransaction {
   fee?: number;
   commission?: number;
 
+  // notification
+
   createdAt?: Date;
   updatedAt?: Date;
 }
