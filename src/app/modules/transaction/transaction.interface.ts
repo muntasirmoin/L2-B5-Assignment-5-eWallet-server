@@ -39,8 +39,8 @@ export interface ITransaction {
   commission?: number;
 
   // notification
-  notifySender?: boolean;
-  notifyReceiver?: boolean;
+  // notifySender?: boolean;
+  // notifyReceiver?: boolean;
 
   createdAt?: Date;
   updatedAt?: Date;
