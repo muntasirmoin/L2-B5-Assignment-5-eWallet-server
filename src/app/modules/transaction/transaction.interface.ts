@@ -39,6 +39,7 @@ export interface ITransaction {
   commission?: number;
 
   // notification
+  notifySender?: boolean;
 
   createdAt?: Date;
   updatedAt?: Date;
