@@ -40,6 +40,7 @@ export interface ITransaction {
 
   // notification
   notifySender?: boolean;
+  notifyReceiver?: boolean;
 
   createdAt?: Date;
   updatedAt?: Date;
