@@ -10,6 +10,7 @@ import {
 import { Wallet } from "../wallet/wallet.model";
 import { IWallet, WalletStatus } from "../wallet/wallet.interface";
 import { Document } from "mongoose";
+import { Notification } from "../notification/notification.model";
 type WalletDocument = IWallet & Document;
 
 const getMyTransactions = async (
@@ -331,6 +332,23 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
     if (!originalTx) {
       throw new AppError(404, "Transaction not found.");
     }
+
+    // Helper to send notifications start
+    const pushNotification = async (
+      user: string,
+      title: string,
+      message: string
+    ) => {
+      await Notification.create({
+        user,
+        title,
+        message,
+        type: originalTx.type, // from your enum
+      });
+    };
+
+    // Helper to send notifications start end
+
     //  add
     if (originalTx.type === TransactionTypeEnum.Add) {
       if (originalTx.receiver?.toString() !== userId) {
