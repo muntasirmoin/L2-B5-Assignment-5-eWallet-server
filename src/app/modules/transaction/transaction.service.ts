@@ -429,6 +429,16 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
       originalTx.status = TransactionStatusEnum.Completed;
       await originalTx.save({ session });
 
+      // start
+      // 🔔 Notification
+      await pushNotification(
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        originalTx.receiver!.toString(),
+        "Add Money Successful",
+        `Your wallet has been credited by ${amount}.`
+      );
+      // end
+
       //
       const timestamp = new Date().toLocaleString();
       console.log(
