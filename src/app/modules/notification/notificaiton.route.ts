@@ -31,4 +31,16 @@ router.patch(
   }
 );
 
+router.patch(
+  "/seen-all",
+  checkAuth(Role.USER, Role.AGENT),
+  async (req, res) => {
+    await Notification.updateMany(
+      { user: req.user._id, seen: false },
+      { seen: true }
+    );
+    res.json({ success: true });
+  }
+);
+
 export const NotificationRoutes = router;
