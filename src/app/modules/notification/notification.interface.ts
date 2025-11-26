@@ -5,8 +5,8 @@ export interface INotification {
   _id?: Types.ObjectId;
   user: Types.ObjectId; // receiver of the notification
   title: string;
-  message: TransactionTypeEnum;
-  type: string;
+  message: string;
+  type: TransactionTypeEnum;
   seen: boolean;
   createdAt?: Date;
   updatedAt?: Date;
