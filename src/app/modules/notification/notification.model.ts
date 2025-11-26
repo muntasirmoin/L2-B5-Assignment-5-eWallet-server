@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import { INotification } from "./notification.interface";
 import { TransactionTypeEnum } from "../transaction/transaction.interface";
 
@@ -28,4 +28,9 @@ const notificationSchema = new Schema<INotification>(
     },
   },
   { timestamps: true }
+);
+
+export const Notification = model<INotification>(
+  "Notification",
+  notificationSchema
 );
