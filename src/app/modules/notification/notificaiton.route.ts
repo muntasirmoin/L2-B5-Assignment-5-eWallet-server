@@ -35,8 +35,9 @@ router.patch(
   "/seen-all",
   checkAuth(Role.USER, Role.AGENT),
   async (req, res) => {
+    const userId = (req.user as JwtPayload).userId;
     await Notification.updateMany(
-      { user: req.user._id, seen: false },
+      { user: userId, seen: false },
       { seen: true }
     );
     res.json({ success: true });
