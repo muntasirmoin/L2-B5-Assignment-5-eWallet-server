@@ -13,4 +13,13 @@ router.get("/my-notifications", checkAuth(), async (req, res) => {
   res.json(notifications);
 });
 
+router.patch("/seen/:id", checkAuth(), async (req, res) => {
+  const notification = await Notification.findByIdAndUpdate(
+    req.params.id,
+    { seen: true },
+    { new: true }
+  );
+  res.json(notification);
+});
+
 export const NotificationRoutes = router;
