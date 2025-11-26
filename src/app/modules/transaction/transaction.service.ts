@@ -343,7 +343,7 @@ const completeTransaction = async (originalTxId: string, userId: string) => {
         user,
         title,
         message,
-        type: originalTx.type, // from your enum
+        type: originalTx.type,
       });
     };
 
