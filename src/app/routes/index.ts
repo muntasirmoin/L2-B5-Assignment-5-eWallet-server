@@ -4,7 +4,7 @@ import { AuthRoutes } from "../modules/auth/auth.route";
 import { WalletRoutes } from "../modules/wallet/wallet.route";
 import { AgentRoutes } from "../modules/agent/agent.route";
 import { TransactionRoutes } from "../modules/transaction/transaction.route";
-import { NotificationRoutes } from "../modules/notification/notificaiton.route";
+import { NotificationRoutes } from "../modules/notification/notification.route";
 
 export const router = Router();
 
