@@ -36,7 +36,26 @@ const markNotificationSeen = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const markAllNotificationsSeen = catchAsync(
+  async (req: Request, res: Response) => {
+    const { userId } = req.user as JwtPayload;
+
+    await Notification.updateMany(
+      { user: userId, seen: false },
+      { seen: true }
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "All notifications marked as seen",
+      data: null,
+    });
+  }
+);
+
 export const NotificationController = {
   getMyNotifications,
   markNotificationSeen,
+  markAllNotificationsSeen,
 };
