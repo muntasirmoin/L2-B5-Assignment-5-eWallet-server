@@ -1,10 +1,13 @@
-// modules/notification/notification.route.ts
 import { Router } from "express";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "../user/user.interface";
 import { NotificationController } from "./notification.controller";
 
 const router = Router();
+
+router.get("/test", (req, res) => {
+  res.json({ message: "Notification module is mounted!" });
+});
 
 router.get(
   "/my-notifications",

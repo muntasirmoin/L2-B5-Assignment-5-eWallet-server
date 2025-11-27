@@ -5,7 +5,17 @@ import { sendResponse } from "../../utils/sendResponse";
 import { Notification } from "./notification.model";
 import { JwtPayload } from "jsonwebtoken";
 
+// Get notifications for the logged-in user
 const getMyNotifications = catchAsync(async (req: Request, res: Response) => {
+  if (!req.user) {
+    return sendResponse(res, {
+      statusCode: httpStatus.UNAUTHORIZED,
+      success: false,
+      message: "Unauthorized: Missing or invalid token",
+      data: undefined,
+    });
+  }
+
   const { userId } = req.user as JwtPayload;
 
   const notifications = await Notification.find({ user: userId })
@@ -20,6 +30,7 @@ const getMyNotifications = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Mark a single notification as seen
 const markNotificationSeen = catchAsync(async (req: Request, res: Response) => {
   const notification = await Notification.findByIdAndUpdate(
     req.params.id,
@@ -35,8 +46,18 @@ const markNotificationSeen = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Mark all notifications as seen for the logged-in user
 const markAllNotificationsSeen = catchAsync(
   async (req: Request, res: Response) => {
+    if (!req.user) {
+      return sendResponse(res, {
+        statusCode: httpStatus.UNAUTHORIZED,
+        success: false,
+        message: "Unauthorized: Missing or invalid token",
+        data: undefined,
+      });
+    }
+
     const { userId } = req.user as JwtPayload;
 
     await Notification.updateMany(
