@@ -309,6 +309,12 @@ const getUserByNumber = async (phone: string) => {
 
 //
 
+const getUserById = async (id: string) => {
+  // Use findById to ensure Mongo ObjectId is handled
+  return await User.findById(id).select("-pin");
+};
+//
+
 export const UserServices = {
   createUser,
   getMe,
@@ -317,4 +323,5 @@ export const UserServices = {
   updateUser,
   updateProfile,
   getUserByNumber,
+  getUserById,
 };

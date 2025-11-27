@@ -5,6 +5,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
 import { Role } from "./user.interface";
+import AppError from "../../helpers/AppError";
 
 const createUser = catchAsync(async (req: Request, res: Response) => {
   const user = await UserServices.createUser(req.body);
@@ -164,44 +165,21 @@ const getUserByNumber = catchAsync(async (req: Request, res: Response) => {
 //
 
 const getUserById = catchAsync(async (req: Request, res: Response) => {
-  // const { phone } = req.body;
-  const userId = req.query.user as string;
+  const id = req.query.id as string;
 
-  if (!userId) {
-    return sendResponse(res, {
-      success: false,
-      statusCode: httpStatus.BAD_REQUEST,
-      message: "User Id is required",
-      data: null,
-    });
-  }
+  if (!id) throw new AppError(400, "User ID is required");
 
-  const user = await UserServices.getUserById(userId);
+  const user = await UserServices.getUserById(id);
 
-  if (!user) {
-    return sendResponse(res, {
-      success: false,
-      statusCode: httpStatus.NOT_FOUND,
-      message: "With This ID user not found",
-      data: null,
-    });
-  }
+  if (!user) throw new AppError(404, "User not found");
 
-  // You can filter what to return (e.g., avoid returning sensitive info)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { pin, ...rest } = user.toObject();
-
-  return sendResponse(res, {
+  sendResponse(res, {
+    statusCode: 200,
     success: true,
-    statusCode: httpStatus.OK,
-    message: "User retrieved successfully",
-    data: {
-      userId: user._id,
-      user: rest,
-    },
+    message: "User fetched successfully",
+    data: user,
   });
 });
-
 export const UserControllers = {
   createUser,
   getMe,
