@@ -18,4 +18,10 @@ router.patch(
   NotificationController.markNotificationSeen
 );
 
+router.patch(
+  "/seen-all",
+  checkAuth(Role.USER, Role.AGENT),
+  NotificationController.markAllNotificationsSeen
+);
+
 export const NotificationRoutes = router;
