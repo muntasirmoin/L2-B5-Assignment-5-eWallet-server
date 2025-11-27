@@ -30,7 +30,7 @@ const moduleRoutes = [
     route: TransactionRoutes,
   },
   {
-    path: "/notification ",
+    path: "/notification",
     route: NotificationRoutes,
   },
 ];
