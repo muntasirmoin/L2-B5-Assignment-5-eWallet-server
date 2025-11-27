@@ -21,6 +21,22 @@ const getMyNotifications = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const markNotificationSeen = catchAsync(async (req: Request, res: Response) => {
+  const notification = await Notification.findByIdAndUpdate(
+    req.params.id,
+    { seen: true },
+    { new: true }
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Notification marked as seen",
+    data: notification,
+  });
+});
+
 export const NotificationController = {
   getMyNotifications,
+  markNotificationSeen,
 };
