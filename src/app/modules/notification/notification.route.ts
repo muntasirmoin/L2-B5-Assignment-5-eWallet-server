@@ -12,4 +12,10 @@ router.get(
   NotificationController.getMyNotifications
 );
 
+router.patch(
+  "/seen/:id",
+  checkAuth(Role.USER, Role.AGENT),
+  NotificationController.markNotificationSeen
+);
+
 export const NotificationRoutes = router;
